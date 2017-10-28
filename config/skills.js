@@ -2746,7 +2746,10 @@ module.exports = {
 				noInterrupt: [7],
 				noRetry: true
 			},
-			3: { length: 1200 }
+			3: {
+				requiredBuff: 10152040,  
+				length: 1200
+			}
 		},
 		9: { // Mana Missiles
 			'*': {
@@ -2755,7 +2758,7 @@ module.exports = {
 			},
 			0: {
 				type: 'charging',
-				length: 1200 // Advised to set a bit longer, like 1300, because otherwise auto-release full charge will shoot 2 missiles in reality
+				length: 1280 
 			},
 			10: { distance: -50 },
 			11: { distance: -100 }
@@ -2873,7 +2876,7 @@ module.exports = {
 		40: { // Rolling Reload
 			0: {
 				fixedSpeed: 1,
-				length: 800,
+				length: 910, //800 in original SP
 				distance: 172.5,
 				forceClip: true
 			}
