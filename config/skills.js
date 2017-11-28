@@ -579,7 +579,7 @@ module.exports = {
 				stamina: 50
 			}
 		},
-		3: { // Onslaught
+		3: { // Onslaught / Changed
 			'*': {
 				distance: [0, 100, 100, 100, 100, 35], // 15~ M.Human, Popori and M.Aman?, do not log this skill with low fps
 				noInterrupt: [1, 2, 3, 4, 8, 9, 10, 11, 12, 13, 15, 18, 21, 23, 24, 25, 26, 27],
@@ -587,7 +587,9 @@ module.exports = {
 					22060: { speed: 1.25 }
 				},
 				chains: {
-					5: 30
+					1: 30,
+					5: 30,
+					18: 30
 				},
 				race: {
 					0: { distance: [0, 100, 100, 100, 100, 15] }, // M.Human
@@ -601,17 +603,18 @@ module.exports = {
 			0: { length: [950, 500, 500, 500, 400, 775] },
 			30: { length: [713, 375, 375, 375, 300, 582] }
 		},
-		4: { // Challenging Shout
+		4: { // Challenging Shout / Changed
 			0: {
-				length: 2215, // TODO: Verify
+				length: 2215,
 				noInterrupt: [2],
 				glyphs: {
 					22056: { speed: 1.25 },
 					22085: { speed: 1.25 }
 				}
-			}
+			},
+			30: false
 		},
-		5: { // Shield Bash
+		5: { // Shield Bash / Changed
 			0: {
 				length: 830,
 				distance: 30,
@@ -624,7 +627,8 @@ module.exports = {
 					8: { distance: 30.000 }, // Popori*/
 					9: { distance: 43.69 } // Elin: 43.693
 				}
-			}
+			},
+			30: false
 		},
 		7: { // Guardian Shout
 			0: {
@@ -679,7 +683,7 @@ module.exports = {
 		11: { // Retaliate
 			0: {
 				type: 'retaliate',
-				length: 1645, // Is this correct?
+				length: 1635, // Is this correct?
 				noRetry: true,
 				noInterrupt: [2],
 				race: {
@@ -693,7 +697,7 @@ module.exports = {
 				noInterrupt: [2]
 			}
 		},
-		13: { // Spring Attack
+		13: { // Spring Attack / Changed
 			0: {
 				length: 2800,
 				distance: 85,
@@ -703,7 +707,8 @@ module.exports = {
 					5: 30,
 					8: 30,
 					10: 30,
-					18: 30
+					18: 30,
+					24: 30
 			    }
 			},
 			30: {
@@ -790,11 +795,15 @@ module.exports = {
 				noInterrupt: [2]
 			}
 		},
-		21: { // Lockdown Blow
-			0: { // Same animation as 1st cast of shield barrage, just slower
+		21: { // Lockdown Blow / Changed
+			0: { 
 				length: 1400,
 				distance: 100.13, // M.Human, 100.126
 				noInterrupt: [2],
+				chains: {
+					10: 30,
+					18: 30		
+				},
 				race: {
 					0: { distance: 100.13 }, // M.Human: 100.125
 					2: { // M.Helf: 1175, 102.701
@@ -806,7 +815,8 @@ module.exports = {
 					8: { distance: 92.39 }, // Popori: 92.39
 					9: { distance: 122.66 } // Elin: 122.66
 				}
-			}
+			},
+			30: false
 		},
 		22: { // Iron Will
 			0: {
@@ -822,13 +832,20 @@ module.exports = {
 				noInterrupt: [2]
 			}
 		},
-		24: { // Chained Leash
-			0: { 
+		24: { // Chained Leash / Changed
+			'*': { 
 				length: [725, 850],
-				noInterrupt: [2]
-		    }
+				noInterrupt: [2],
+				/*chains: {
+					//4: 1,
+					4: 2
+				}*/
+			}, // Looks a tad like a ninja skill chain
+			0: true,
+			1: false,
+			2: false
 		},
-		25: { // Wallop
+		25: { // Wallop / Changed
 			0: {
 				length: 2375,
 				distance: 100,
@@ -842,7 +859,8 @@ module.exports = {
 					10: 30,
 					13: 30,
 					15: 30,
-					18: 30
+					18: 30,
+					24: 30
 			    }
 			},
 			30: {
@@ -887,6 +905,27 @@ module.exports = {
 					9: { length: 650 }, // Elin
 				}
 		    }
+		},
+		28: { // Righteous Leap
+			0: {
+                length: [375, 1025, 3100],
+				distance: [29.48, 445.52, 0],
+				chains: {
+					15: 1,
+					24: 1
+				}
+			},
+			1: false
+		},
+		29: { // Deploy Barrier
+			0: false
+			// length: 10700
+		},
+		30: { // Heavenly Shield 
+			0: false
+		},
+		91: { // Awaken Aura
+			0: false
 		}	
 	},	
 	2: { // Slayer
