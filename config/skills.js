@@ -1417,6 +1417,7 @@ module.exports = {
 				type: 'charging',
 				length: [650, 650, 650], // Overcharge hold charge time: 2515 | Charge hold time is fixed, so therefore the more attack speed you have the more free time you have after a fully charging to reposition.
 				noInterrupt: [2, 4, 10, 15, 18, 24, 25, 30], // Maximum Over Charge hold time = (overChargeLength * 1 + ChargingSpeed from glyphs) + (overChargeLength * 1)
+				//autorelease: 2025
 				glyphs: { // SP doesn't apply this but it isn't too off from what it actually is.
 					24067: { chargeSpeed: 0.25 } // Only these affect charge hold time
 				},
@@ -1580,7 +1581,8 @@ module.exports = {
 			0: {
 				type: 'charging',
 				length: [650, 650, 650],
-			    noInterrupt: [2, 3, 4, 15, 18, 24, 25, 30],
+				noInterrupt: [2, 3, 4, 15, 18, 24, 25, 30],
+				//autorelease: 2025
 				glyphs: {
 					24009: { chargeSpeed: 0.25 },
 					24052: { chargeSpeed: 0.25 },
@@ -1728,6 +1730,7 @@ module.exports = {
 			},
             14: { 
 				distance: 87.28, // 87.272
+				//autorelease: 0 // thonk
 				race: {
 					3: { distance: 72.79 }, // F.Helf: 72.785
 					6: { distance: 69.7 }, // M.Casta: 69.704
@@ -2018,6 +2021,7 @@ module.exports = {
 				type: 'charging',
 				length: [1000, 1000],
 				noInterrupt: [7, 26],
+				autorelease: 0,
 				abnormals: {
 					25140: { chargeSpeed: 0.3 }
 				}
@@ -2327,6 +2331,7 @@ module.exports = {
 				type: 'charging',
 				length: [600, 600, 600],
 				noInterrupt: [4, 22],
+				//autoRelease: 2550,
 				abnormals: {
 					26180: { chargeSpeed: 0.3 },
 					601450: { chargeSpeed: 0.5 }
@@ -2377,6 +2382,7 @@ module.exports = {
 				type: 'charging',
 				length: [800, 800, 800],
 				noInterrupt: [3, 22],
+				//autoRelease: 2550,
 				abnormals: {
 					26160: { chargeSpeed: 0.3 },
 					26170: { chargeSpeed: 0.3 },
@@ -2721,6 +2727,7 @@ module.exports = {
 				type: 'charging',
 				length: [800, 1600],
 				noInterrupt: [26, 27, 38],
+				//autoRelease: 0
 				glyphs: {
 					28031: { chargeSpeed: 0.25 }
 				}
@@ -2977,7 +2984,8 @@ module.exports = {
 			'*': { noInterrupt: [8, 17, 23] },
 			0: {
 				type: 'charging',
-				length: 1475
+				length: 1475,
+				//autoRelease: 0
 			},
 			10: {
 				length: 850,
@@ -2998,7 +3006,8 @@ module.exports = {
 		    '*': { noInterrupt: [8, 17, 23] },
 			0: {
 				type: 'charging',
-				length: 1475
+				length: 1475,
+				//autoRelease: 0
 			},
 			10: {
 				length: 850, // 810 female high elf
@@ -3707,6 +3716,7 @@ module.exports = {
 			0: {
 				type: 'charging',
 				length: 1250
+				//autoRelease: 0
 			},
 			10: { distance: -50 },
 			11: { distance: -100 }
@@ -4213,6 +4223,7 @@ module.exports = {
 				},
 				chains: {
 					1: 30,
+					3: 30,
 					4: 30,
 					6: 30,
 					7: 30,
@@ -4284,6 +4295,7 @@ module.exports = {
 				},
 				chains: {
 					1: 70,
+					3: 70,
 					4: 70,
 					6: 70,
 					7: 70,
@@ -4523,6 +4535,7 @@ module.exports = {
 				},
 				chains: {
 					1: 30,
+					3: 30,
 					4: 30,
 					5: 30,
 					6: 30,
@@ -4778,6 +4791,7 @@ module.exports = {
 				noInterrupt: [19],
 				chains: {
 					1: 30,
+					3: 30,
 					4: 30,
 					5: 30,
 					6: 30,

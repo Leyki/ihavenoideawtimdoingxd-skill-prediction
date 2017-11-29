@@ -1,5 +1,4 @@
 const JITTER_COMPENSATION	= true,
-	JITTER_ADJUST			= 0,		//	This number is added to your detected minimum ping to get the compensation amount.
 	SKILL_RETRY_COUNT		= 2,		//	Number of times to retry each skill (0 = disabled). Recommended 1-3.
 	SKILL_RETRY_MS			= 30,		/*	Time to wait between each retry.
 											SKILL_RETRY_MS * SKILL_RETRY_COUNT should be under 100, otherwise skills may go off twice.
@@ -7,7 +6,8 @@ const JITTER_COMPENSATION	= true,
 	SKILL_RETRY_JITTERCOMP	= 15,		//	Skills that support retry will be sent this much earlier than estimated by jitter compensation.
 	SKILL_RETRY_ALWAYS		= false,	//	Setting this to true will reduce ghosting for extremely short skills, but may cause other skills to fail.
 	SKILL_DELAY_ON_FAIL		= true,		//	Basic initial desync compensation. Useless at low ping (<50ms).
-
+	SERVER_TIMEOUT			= 125,		/*	This number is added to your maximum ping + skill retry period to set the failure threshold for skills.
+											If animations are being cancelled while damage is still applied, increase this number.*/
 	FORCE_CLIP_STRICT		= true,		/*	Set this to false for smoother, less accurate iframing near walls.
 											Warning: Will cause occasional clipping through gates when disabled. Do NOT abuse this.
 										*/
@@ -24,7 +24,6 @@ const {protocol, sysmsg} = require('tera-data-parser'),
 	Ping = require('./ping'),
 	AbnormalityPrediction = require('./abnormalities'),
 	skills = require('./config/skills'),
-	timeouts = require('./config/serverTimeouts'),
 	Command = require('command'),
 	silence = require('./config/silence').reduce((map, value) => { // Convert array to object for fast lookup
 		map[value] = true
@@ -122,7 +121,7 @@ module.exports = function SkillPrediction(dispatch) {
 		job = (model - 10101) % 100
 		if(DEBUG) console.log('[Skill Prediction] Class', job)
 		
-		let timeoutData = get(timeouts, 'timeouts', job) || get(timeouts, 'timeouts', '*')
+/*		let timeoutData = get(timeouts, 'timeouts', job) || get(timeouts, 'timeouts', '*')
 		if(timeoutData)	{
 			classBasedServerTimeout = timeoutData
 			if(DEBUG) console.log('[Skill Prediction] Class based server timeout:', timeoutData)
@@ -131,6 +130,7 @@ module.exports = function SkillPrediction(dispatch) {
 			classBasedServerTimeout = 200 //failover
 			if(DEBUG) console.log('[Skill Prediction] Class based server timeout (failover!):', classBasedServerTimeout)
 		}
+*/
 		hookInventory()
 	})
 
@@ -420,36 +420,38 @@ module.exports = function SkillPrediction(dispatch) {
 			interruptType = 0
 
 		if(type == 'C_PRESS_SKILL' && !event.start) {
-			if((info.type == 'hold' || info.type == 'holdInfinite') && currentAction && currentAction.skill == skill) {
-				updateLocation(event)
+			if(currentAction && currentAction.skill == skill)
+				if(info.type == 'hold' || info.type == 'holdInfinite') {
+					updateLocation(event)
 
-				if(info.chainOnRelease) {
-					sendActionEnd(11)
+					if(info.chainOnRelease) {
+						sendActionEnd(11)
 
-					info = skillInfo(skill += info.chainOnRelease - ((skill - 0x4000000) % 100))
-					if(!info) {
-						if(send) toServerLocked(data)
-						return
+						info = skillInfo(skill = modifyChain(skill, info.chainOnRelease))
+						if(!info) {
+							if(send) toServerLocked(data)
+							return
+						}
+
+						startAction({
+							skill,
+							info,
+							stage: 0,
+							speed: info.fixedSpeed || aspd * (info.speed || 1)
+						})
 					}
-
-					startAction({
-						skill,
-						info,
-						stage: 0,
-						speed: info.fixedSpeed || aspd * (info.speed || 1)
-					})
-				}
-				else if(info.length) {
-					let length = lastStartTime + info.length - Date.now()
-					if(length > 0) {
-						stageEnd = sendActionEnd.bind(null, 51, info.distance)
-						stageEndTime = Date.now() + length
-						stageEndTimeout = setTimeout(stageEnd, length)
+					else if(info.length) {
+						let length = lastStartTime + info.length - Date.now()
+						if(length > 0) {
+							stageEnd = sendActionEnd.bind(null, 51, info.distance)
+							stageEndTime = Date.now() + length
+							stageEndTimeout = setTimeout(stageEnd, length)
+						}
+						else sendActionEnd(51)
 					}
-					else sendActionEnd(51)
+					else sendActionEnd(10)
 				}
-				else sendActionEnd(10)
-			}
+				else if(info.type == 'charging') sendGrantSkill(modifyChain(skill, 10 + currentAction.stage))
 
 			if(send) toServerLocked(data)
 			return
@@ -502,14 +504,14 @@ module.exports = function SkillPrediction(dispatch) {
 
 			let chain = get(info, 'chains', currentSkillBase + '-' + currentSkillSub) || get(info, 'chains', currentSkillBase)
 
-			if(chain) {
+			if(chain !== undefined) {
 				if(chain === null) {
 					sendActionEnd(4)
 					if(send) toServerLocked(data)
 					return
 				}
 
-				skill += chain - ((skill - 0x4000000) % 100)
+				skill = modifyChain(skill, chain)
 				interruptType = INTERRUPT_TYPES[info.type] || 4
 			}
 			else interruptType = INTERRUPT_TYPES[info.type] || 6
@@ -575,7 +577,7 @@ module.exports = function SkillPrediction(dispatch) {
 
 					if(abnormal.speed) abnormalSpeed *= abnormal.speed
 					if(abnormal.chargeSpeed) chargeSpeed += abnormal.chargeSpeed
-					if(abnormal.chain) skill += abnormal.chain - ((skill - 0x4000000) % 100)
+					if(abnormal.chain) skill = modifyChain(skill, abnormal.chain)
 					if(abnormal.skill) skill = 0x4000000 + abnormal.skill
 				}
 
@@ -644,9 +646,9 @@ module.exports = function SkillPrediction(dispatch) {
 			})
 	}
 
-	function toServerLocked(data) {
+	function toServerLocked(...args) {
 		sending = true
-		let success = dispatch.toServer(data)
+		let success = dispatch.toServer(...args)
 		sending = false
 
 		return success
@@ -699,7 +701,7 @@ module.exports = function SkillPrediction(dispatch) {
 					dequeueNotifyLocation(event.skill)
 
 					if(JITTER_COMPENSATION && event.stage == 0) {
-						let delay = Date.now() - lastStartTime - ping.min - JITTER_ADJUST
+						let delay = Date.now() - lastStartTime - ping.min
 
 						if(delay > 0 && delay < 1000) {
 							delayNext = delay
@@ -744,6 +746,8 @@ module.exports = function SkillPrediction(dispatch) {
 
 	dispatch.hook('S_GRANT_SKILL', 1, event => {
 		if(DEBUG) debug(['<- S_GRANT_SKILL', skillId(event.skill)].join(' '))
+
+		if(skillInfo(modifyChain(event.skill, 0))) return false
 	})
 
 	dispatch.hook('S_INSTANT_DASH', 1, event => {
@@ -1000,7 +1004,8 @@ module.exports = function SkillPrediction(dispatch) {
 
 		opts.distance = (multiStage ? get(info, 'distance', opts.stage) : info.distance) || 0
 
-		let serverTimeoutTime = ping.max + (SKILL_RETRY_COUNT * SKILL_RETRY_MS) + classBasedServerTimeout
+		let serverTimeoutTime = ping.max + (SKILL_RETRY_COUNT * SKILL_RETRY_MS) + SERVER_TIMEOUT,
+			speed = opts.speed + (info.type == 'charging' ? opts.chargeSpeed : 0)
 
 		if(info.type == 'teleport' && opts.stage == info.teleportStage) {
 			opts.distance = Math.min(opts.distance, Math.max(0, calcDistance(currentLocation, opts.targetLoc) - 15)) // Client is approx. 15 units off
@@ -1009,12 +1014,27 @@ module.exports = function SkillPrediction(dispatch) {
 		}
 		else if(info.type == 'holdInfinite' || info.type == 'charging' && opts.stage > 0 && !(opts.stage < info.length.length)) {
 			serverTimeout = setTimeout(sendActionEnd, serverTimeoutTime, 6)
-			stageEnd = null
+
+			if(info.type == 'charging' && info.autoRelease !== undefined) {
+				stageEnd = () => {
+					toServerLocked('C_PRESS_SKILL', 1, {
+						skill: opts.skill,
+						start: false,
+						x: currentLocation.x,
+						y: currentLocation.y,
+						z: currentLocation.z,
+						w: currentLocation.w
+					})
+					sendGrantSkill(modifyChain(opts.skill, 10 + opts.stage))
+				}
+				stageEndTimeout = setTimeout(stageEnd, info.autoRelease / speed)
+			}
+			else stageEnd = null
+
 			return
 		}
 
-		let speed = opts.speed + (info.type == 'charging' ? opts.chargeSpeed : 0),
-			length = Math.round((multiStage ? info.length[opts.stage] : info.length) / speed)
+		let length = Math.round((multiStage ? info.length[opts.stage] : info.length) / speed)
 
 		if(length > serverTimeoutTime) serverTimeout = setTimeout(sendActionEnd, serverTimeoutTime, 6)
 
@@ -1070,6 +1090,10 @@ module.exports = function SkillPrediction(dispatch) {
 	function refreshStageEnd() {
 		clearTimeout(stageEndTimeout)
 		stageEndTimeout = setTimeout(stageEnd, stageEndTime - Date.now())
+	}
+
+	function sendGrantSkill(skill) {
+		dispatch.toClient('S_GRANT_SKILL', 1, {skill})
 	}
 
 	function sendInstantDash(location) {
@@ -1195,6 +1219,11 @@ module.exports = function SkillPrediction(dispatch) {
 		loc.x += Math.cos(r) * distance
 		loc.y += Math.sin(r) * distance
 		return loc
+	}
+
+	// Modifies the chain part (last 2 digits) of a skill ID, preserving flags
+	function modifyChain(id, chain) {
+		return id - ((id & 0xffffff) % 100) + chain
 	}
 
 	function skillId(id, local) {
