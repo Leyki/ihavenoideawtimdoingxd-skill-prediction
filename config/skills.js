@@ -3667,11 +3667,12 @@ module.exports = {
 		9: { // Mana Missiles
 			'*': { 
 				blockCancelPacket: true,
-				length: 1250 
+				length: 1260 
 			},
 			0: {
 				type: 'charging',
-				autoRelease: 0
+				autoRelease: 0,
+				noRetry:true
 			},
 			10: { distance: -50 },
 			11: { distance: -100 }
