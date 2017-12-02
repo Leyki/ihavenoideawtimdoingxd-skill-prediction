@@ -3620,7 +3620,8 @@ module.exports = {
 		},
 		5: { // Burst Fire
 			'*':{
-				blockCancelPacket: true
+				blockCancelPacket: true,
+				noInterrupt: [9-0]
 			},
 			0: { length: 855 },
 			1: {
