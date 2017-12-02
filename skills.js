@@ -286,14 +286,14 @@ module.exports = function SkillPrediction(dispatch) {
 	dispatch.hook('S_MOUNT_VEHICLE',1, event => {
         if (cid.equals(event.target)) {
             mounted = true
-            if (config.DEBUG) console.log('[Skill Prediction] Your character mounted')
+            if (DEBUG) console.log('[Skill Prediction] You\'re mounted')
         }
     })
 
 	dispatch.hook('S_UNMOUNT_VEHICLE', 1, event => {
         if (cid.equals(event.target)) {
             mounted = false
-            if (config.DEBUG) console.log('[Skill Prediction] Your character unmounted')
+            if (DEBUG) console.log('[Skill Prediction] You\'re unmounted')
         }
 	})
 

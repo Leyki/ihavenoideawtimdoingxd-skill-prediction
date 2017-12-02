@@ -1367,7 +1367,7 @@ module.exports = {
 				},
 				abnormals: {
 					24130: { chargeSpeed: 0.3 },
-					24170: { chargeSpeed: 0.25 },
+					24170: { speed: 1.25 },
 					400500: { chargeSpeed: 0.2 },
 					400501: { chargeSpeed: 0.4 },
 					4010150: { chargeSpeed: 0.2 } // All of these do not
@@ -4395,7 +4395,7 @@ module.exports = {
 		},
 		6: { // One Thousand Cuts
 			'*': {
-				length: 440,
+				length: 430,
 				chains: { // Needed to state we want to trigger substage 4, else it will trigger 6
 					1: 30,
 					5: 30,
@@ -4633,24 +4633,26 @@ module.exports = {
 			'*': {
 				fixedSpeed: 1,
 				length: 1525,
+				noInterrupt: [16],
 				chains: {
-					1: null,
-					2: null,
-					4: null,
-					5: null,
-					6: null,
-					7: null,
-					8: null,
-					9: null,
-					10: null,
-					11: null,
-					12: null,
-					13: null,
-					14: null,
-					15: null,
-					17: null,
-					19: null,
-					20: null
+					1: 30,
+					2: 30,
+					3: 30,
+					'4-10': 30,
+					5: 30,
+					6: 30,
+					7: 30,
+					8: 30,
+					9: 30,
+					10: 30,
+					12: 30,
+					13: 30,
+					14: 30,
+					15: 30,
+					17: 30,
+					18: 30,
+					19: 30,
+					20: 30
 				},
 			},
 			0: true,
