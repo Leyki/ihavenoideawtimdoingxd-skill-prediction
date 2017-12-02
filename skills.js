@@ -885,7 +885,7 @@ module.exports = function SkillPrediction(dispatch) {
 
 				// Skills that may only be cancelled during part of the animation are hard to emulate, so we use server response instead
 				// This may cause bugs with very high ping and casting the same skill multiple times
-				if(currentAction && event.skill == currentAction.skill && [2, 25, 29, 37, 43].includes(event.type))
+				if(currentAction && event.skill == currentAction.skill && [2, 13, 25, 29, 37, 43].includes(event.type))
 					sendActionEnd(event.type)
 
 				return false
