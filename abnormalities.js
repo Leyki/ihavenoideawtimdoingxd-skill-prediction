@@ -8,7 +8,7 @@ class AbnormalityPrediction {
 		this.dispatch = dispatch
 
 		this.ping = Ping(dispatch)
-
+        this.enabled = true
 		this.cid = null
 		this.myAbnormals = {}
 
@@ -25,7 +25,7 @@ class AbnormalityPrediction {
 				if(DEBUG) console.log('<-', type, event.id, event.duration, event.stacks, abnormals[event.id] == true ? 'X' : '')
 
 				let info = abnormals[event.id]
-				if(info) {
+                if(info && this.enabled) {
 					if(info == true) return false
 
 					if(info.overrides && this.exists(info.overrides)) this.remove(info.overrides)
@@ -50,7 +50,7 @@ class AbnormalityPrediction {
 			if(event.target.equals(this.cid)) {
 				if(DEBUG) console.log('<- S_ABNORMALITY_END', event.id, abnormals[event.id] == true ? 'X' : '')
 
-				if(abnormals[event.id] == true) return false
+                if(abnormals[event.id] == true && this.enabled) return false
 
 				if(!this.myAbnormals[event.id]) return false
 
