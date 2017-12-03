@@ -66,7 +66,7 @@ module.exports = function SkillPrediction(dispatch) {
 
     LoadConfiguration()
 
-    if (config.ENABLED)
+    if (config.enabled)
         enable()
 
     function LoadConfiguration() {
@@ -120,7 +120,7 @@ module.exports = function SkillPrediction(dispatch) {
     function disable() {
         for (let pointer of packetsHooks) {
             dispatch.unhook(pointer)
-            id(config.DEBUG)
+            id(config.debug)
             debug(pointer)
         }
         packetsHooks = []
@@ -136,8 +136,8 @@ module.exports = function SkillPrediction(dispatch) {
         switch (option) {
             case 'info':
                 command.message('Unofficial SP. Date:03/12/17')
-                command.message(`Config: Timeout: ${config.SERVER_TIMEOUT}, retries: ${config.SKILL_RETRY_COUNT},
-					jitter comp: ${config.JITTER_COMPENSATION}, debug: ${config.DEBUG}`)
+                command.message(`Config: Timeout: ${config.server_timeout}, retries: ${config.skill_retry_count},
+					jitter comp: ${config.jitter_compensation}, debug: ${config.debug}`)
                 break
             case 'timeout':
                 if (value === null || value === undefined || value === "") {
@@ -150,64 +150,64 @@ module.exports = function SkillPrediction(dispatch) {
                 else {
                     if (isNaN(parseInt(value)))
                         break
-                    config.SERVER_TIMEOUT = parseInt(value)
+                    config.server_timeout = parseInt(value)
                 }
                 break
             case 'debug':
-                if (config.DEBUG)
+                if (config.debug)
                     command.message('[Skill Prediction] Debug deactivated')
                 else
                     command.message('[Skill Prediction] Debug activated')
 
-                config.DEBUG = !config.DEBUG
+                config.debug = !config.debug
                 break
             case 'debugloc':
-                if (config.DEBUG_LOC)
+                if (config.debug_loc)
                     command.message('[Skill Prediction] Location debug deactivated')
                 else
                     command.message('[Skill Prediction] Location debug activated')
 
-                config.DEBUG_LOC = !config.DEBUG_LOC
+                config.debug_loc = !config.debug_loc
                 break
             case 'strictdef':
                 if (inCombat) {
                     command.message('[Skill Prediction] DEFEND_SUCCESS_STRICT can be changed only out of combat')
                 }
                 else {
-                    if (config.DEFEND_SUCCESS_STRICT)
+                    if (config.defend_success_strict)
                         command.message('[Skill Prediction] DEFEND_SUCCESS_STRICT deactivated')
                     else
                         command.message('[Skill Prediction] DEFEND_SUCCESS_STRICT activated')
 
-                    config.DEFEND_SUCCESS_STRICT = !config.DEFEND_SUCCESS_STRICT
+                    config.defend_success_strict = !config.defend_success_strict
                 }
                 break
             case 'mount':
-                if (config.MOUNTCHECK)
+                if (config.mount_check)
                     command.message('[Skill Prediction] Mount detection deactivated')
                 else
                     command.message('[Skill Prediction] Mount detection activated')
 
-                config.MOUNTCHECK = !config.MOUNTCHECK
+                config.mount_check = !config.mount_check
                 break
             case 'save':
                 SaveConfiguration()
                 break
             case 'off':
-                if (!currentAction && !serverAction && !mounted && alive && !inCombat && !sending && config.ENABLED) {
+                if (!currentAction && !serverAction && !mounted && alive && !inCombat && !sending && config.enabled) {
                     disable()
                     command.message('[Skill Prediction] Deactivated')
-                    config.ENABLED = !config.ENABLED
+                    config.enabled = !config.enabled
                 }
                 else {
                     command.message('[Skill Prediction] OwO!')
                 }
                 break
             case 'on':
-                if (!currentAction && !serverAction && !mounted && alive && !inCombat && !sending && !config.ENABLED) {
+                if (!currentAction && !serverAction && !mounted && alive && !inCombat && !sending && !config.enabled) {
                     enable()
                     command.message('[Skill Prediction] Activated')
-                    config.ENABLED = !config.ENABLED
+                    config.enabled = !config.enabled
                 }
                 else {
                     command.message('[Skill Prediction] No,no,no!')
@@ -225,7 +225,7 @@ module.exports = function SkillPrediction(dispatch) {
         ;({cid, model} = event)
         race = Math.floor((model - 10101) / 100)
         job = (model - 10101) % 100
-        if (config.DEBUG) debug('[Skill Prediction] Class', job)
+        if (config.debug) debug('[Skill Prediction] Class', job)
 
         /*		let timeoutData = get(timeouts, 'timeouts', job) || get(timeouts, 'timeouts', '*')
                 if(timeoutData)	{
@@ -267,7 +267,7 @@ module.exports = function SkillPrediction(dispatch) {
     })
 
     dispatch.hook('S_CREST_APPLY', 1, event => {
-        if (config.DEBUG_GLYPH) console.log('Glyph', event.id, event.enabled)
+        if (config.debug_glyphs) console.log('Glyph', event.id, event.enabled)
 
         currentGlyphs[event.id] = event.enabled
     })
@@ -318,7 +318,7 @@ module.exports = function SkillPrediction(dispatch) {
 
                 staminaModifier = 0
                 //Body WP roll check for gunner, only inventory parse :( So weird
-                if (job == 9 && config.WP_BODY_ROLL_CONTROL) {
+                if (job == 9 && config.wp_roll_control) {
                     for (var item of inventory) {
                         if (item.slot == 3) {
                             for (var set of item.passivitySets) {
@@ -326,7 +326,7 @@ module.exports = function SkillPrediction(dispatch) {
                                     continue
                                 for (var id of set.passivities) {
                                     if (id.dbid == 350905) {
-                                        if (config.DEBUG) debug('[Skill Prediction (INVEN)] ID 350905 rolled')
+                                        if (config.debug) debug('[Skill Prediction (INVEN)] ID 350905 rolled')
                                         staminaModifier = -5
                                     }
                                 }
@@ -370,19 +370,19 @@ module.exports = function SkillPrediction(dispatch) {
     dispatch.hook('S_MOUNT_VEHICLE', 1, event => {
         if (cid.equals(event.target)) {
             mounted = true
-            if (config.DEBUG) debug('[Skill Prediction] Your character mounted')
+            if (config.debug) debug('[Skill Prediction] Your character mounted')
         }
     })
 
     dispatch.hook('S_UNMOUNT_VEHICLE', 1, event => {
         if (cid.equals(event.target)) {
             mounted = false
-            if (config.DEBUG) debug('[Skill Prediction] Your character unmounted')
+            if (config.debug) debug('[Skill Prediction] Your character unmounted')
         }
     })
 
     function cPlayerLocationHandler(event) {
-        if (config.DEBUG_LOC) console.log('Location %d %d (%d %d %d %d) > (%d %d %d)', event.type, event.speed, Math.round(event.x1), Math.round(event.y1), Math.round(event.z1), event.w, Math.round(event.x2), Math.round(event.y2), Math.round(event.z2))
+        if (config.debug_loc) console.log('Location %d %d (%d %d %d %d) > (%d %d %d)', event.type, event.speed, Math.round(event.x1), Math.round(event.y1), Math.round(event.z1), event.w, Math.round(event.x2), Math.round(event.y2), Math.round(event.z2))
 
         if (currentAction) {
             let info = skillInfo(currentAction.skill)
@@ -401,7 +401,7 @@ module.exports = function SkillPrediction(dispatch) {
 
 
     function notifyLocation(type, version, event) {
-        if (config.DEBUG_LOC) console.log('-> %s %s %d (%d %d %d %d)', type, skillId(event.skill), event.stage, Math.round(event.x), Math.round(event.y), Math.round(event.z), event.w)
+        if (config.debug_loc) console.log('-> %s %s %d (%d %d %d %d)', type, skillId(event.skill), event.stage, Math.round(event.x), Math.round(event.y), Math.round(event.z), event.w)
 
         currentLocation = {
             x: event.x,
@@ -450,14 +450,14 @@ module.exports = function SkillPrediction(dispatch) {
         if (delayNext && Date.now() <= stageEndTime) {
             delay = delayNext
 
-            if (info && !info.noRetry && config.SKILL_RETRY_COUNT) {
-                delay -= config.SKILL_RETRY_JITTERCOMP
+            if (info && !info.noRetry && config.skill_retry_count) {
+                delay -= config.skill_retry_jittercomp
 
                 if (delay < 0) delay = 0
             }
         }
 
-        if (config.DEBUG) {
+        if (config.debug) {
             let strs = ['->', type, skillId(event.skill)]
 
             if (type == 'C_START_SKILL') strs.push(...[event.unk ? 1 : 0, event.moving ? 1 : 0, event.continue ? 1 : 0])
@@ -470,7 +470,7 @@ module.exports = function SkillPrediction(dispatch) {
                 strs.push('[' + tmp.join(', ') + ']')
             }
 
-            if (config.DEBUG_LOC) {
+            if (config.debug_loc) {
                 strs.push(...[event.w + '\xb0', '(' + Math.round(event.x), Math.round(event.y), Math.round(event.z) + ')'])
 
                 if (type == 'C_START_SKILL' || type == 'C_START_TARGETED_SKILL' || type == 'C_START_INSTANCE_SKILL_EX')
@@ -552,7 +552,7 @@ module.exports = function SkillPrediction(dispatch) {
             return
         }
 
-        if (mounted && config.MOUNTCHECK) {
+        if (mounted && config.mount_check) {
             sendCannotStartSkill(event.skill)
             //sendSystemMessage('SMT_CANT_SKILL_USER_CONDITION')
             return false
@@ -738,7 +738,7 @@ module.exports = function SkillPrediction(dispatch) {
         // However, once the animation starts this is no longer possible, so instead we simulate retrying each skill
         if (!info.noRetry)
             retry(() => {
-                if ((config.SKILL_RETRY_ALWAYS && type != 'C_PRESS_SKILL') || currentAction && currentAction.skill == skill) return toServerLocked(data)
+                if ((config.skill_retry_always && type != 'C_PRESS_SKILL') || currentAction && currentAction.skill == skill) return toServerLocked(data)
                 return false
             })
     }
@@ -752,13 +752,13 @@ module.exports = function SkillPrediction(dispatch) {
     }
 
     function cCancelSkillHandler(event) {
-        if (config.DEBUG) debug(['-> C_CANCEL_SKILL', skillId(event.skill), event.type].join(' '))
+        if (config.debug) debug(['-> C_CANCEL_SKILL', skillId(event.skill), event.type].join(' '))
 
         if (currentAction) {
             let info = skillInfo(currentAction.skill) // event.skill can be wrong, so use the known current skill instead
             if (info && info.type == 'lockon') sendActionEnd(event.type)
             if (info && info.blockCancelPacket) {
-                if (config.DEBUG) debug('[Skill Prediction] C_CANCEL_SKILL was dropped')
+                if (config.debug) debug('[Skill Prediction] C_CANCEL_SKILL was dropped')
                 return false
             }
         }
@@ -767,11 +767,11 @@ module.exports = function SkillPrediction(dispatch) {
 
     function sActionStageHandler(event) {
         if (isMe(event.source)) {
-            if (config.DEBUG) {
+            if (config.debug) {
                 let duration = Date.now() - debugActionTime,
                     strs = [skillInfo(event.skill) ? '<X' : '<-', 'S_ACTION_STAGE', skillId(event.skill), event.stage, (Math.round(event.speed * 1000) / 1000) + 'x']
 
-                if (config.DEBUG_LOC) strs.push(...[event.w + '\xb0', '(' + Math.round(event.x), Math.round(event.y), Math.round(event.z) + ')'])
+                if (config.debug_loc) strs.push(...[event.w + '\xb0', '(' + Math.round(event.x), Math.round(event.y), Math.round(event.z) + ')'])
 
                 strs.push(...[event.unk, event.unk1, event.toX, event.toY, event.toZ, event.unk2, event.unk3])
 
@@ -802,7 +802,7 @@ module.exports = function SkillPrediction(dispatch) {
                     serverConfirmedAction = true
                     dequeueNotifyLocation(event.skill)
 
-                    if (config.JITTER_COMPENSATION && event.stage == 0) {
+                    if (config.jitter_compensation && event.stage == 0) {
                         let delay = Date.now() - lastStartTime - ping.min
 
                         if (delay > 0 && delay < 1000) {
@@ -848,7 +848,7 @@ module.exports = function SkillPrediction(dispatch) {
 
 
     function sGrantSkillHandler(event) {
-        if (config.DEBUG) debug(['<- S_GRANT_SKILL', skillId(event.skill)].join(' '))
+        if (config.debug) debug(['<- S_GRANT_SKILL', skillId(event.skill)].join(' '))
 
         if (skillInfo(modifyChain(event.skill, 0))) return false
     }
@@ -856,11 +856,11 @@ module.exports = function SkillPrediction(dispatch) {
 
     function sInstantDashHandler(event) {
         if (isMe(event.source)) {
-            if (config.DEBUG) {
+            if (config.debug) {
                 let duration = Date.now() - debugActionTime,
                     strs = [(serverAction && skillInfo(serverAction.skill)) ? '<X' : '<-', 'S_INSTANT_DASH', event.unk1, event.unk2, event.unk3]
 
-                if (config.DEBUG_LOC) strs.push(...[event.w + '\xb0', '(' + Math.round(event.x), Math.round(event.y), Math.round(event.z) + ')'])
+                if (config.debug_loc) strs.push(...[event.w + '\xb0', '(' + Math.round(event.x), Math.round(event.y), Math.round(event.z) + ')'])
 
                 strs.push(...[
                     (Math.round(calcDistance(serverAction, event) * 1000) / 1000) + 'u',
@@ -878,12 +878,12 @@ module.exports = function SkillPrediction(dispatch) {
 
     function sInstantMoveHandler(event) {
         if (isMe(event.id)) {
-            if (config.DEBUG) {
+            if (config.debug) {
                 let info = serverAction && skillInfo(serverAction.skill),
                     duration = Date.now() - debugActionTime,
                     strs = ['<- S_INSTANT_MOVE']
 
-                if (config.DEBUG_LOC) strs.push(...[event.w + '\xb0', '(' + Math.round(event.x), Math.round(event.y), Math.round(event.z) + ')'])
+                if (config.debug_loc) strs.push(...[event.w + '\xb0', '(' + Math.round(event.x), Math.round(event.y), Math.round(event.z) + ')'])
 
                 strs.push(...[
                     (Math.round(Math.sqrt(Math.pow(event.x - serverAction.x, 2) + Math.pow(event.y - serverAction.y, 2)) * 1000) / 1000) + 'u',
@@ -912,11 +912,11 @@ module.exports = function SkillPrediction(dispatch) {
 
     function sActionEndHandler(event) {
         if (isMe(event.source)) {
-            if (config.DEBUG) {
+            if (config.debug) {
                 let duration = Date.now() - debugActionTime,
                     strs = [(event.id == lastEndedId || skillInfo(event.skill)) ? '<X' : '<-', 'S_ACTION_END', skillId(event.skill), event.type]
 
-                if (config.DEBUG_LOC) strs.push(...[event.w + '\xb0', '(' + Math.round(event.x), Math.round(event.y), Math.round(event.z) + ')'])
+                if (config.debug_loc) strs.push(...[event.w + '\xb0', '(' + Math.round(event.x), Math.round(event.y), Math.round(event.z) + ')'])
 
                 if (serverAction)
                     strs.push(...[
@@ -980,11 +980,11 @@ module.exports = function SkillPrediction(dispatch) {
     dispatch.hook('C_CHECK_VERSION', 'raw', () => {
         dispatch.hook('S_EACH_SKILL_RESULT', [321553, 321554].includes(dispatch.base.protocolVersion) ? 3 : 4, event => {
             if (isMe(event.target) && event.setTargetAction) {
-                if (config.DEBUG) {
+                if (config.debug) {
                     let duration = Date.now() - debugActionTime,
                         strs = ['<- S_EACH_SKILL_RESULT.setTargetAction', skillId(event.targetAction), event.targetStage]
 
-                    if (config.DEBUG_LOC) strs.push(...[event.targetW + '\xb0', '(' + Math.round(event.targetX), Math.round(event.targetY), Math.round(event.targetZ) + ')'])
+                    if (config.debug_loc) strs.push(...[event.targetW + '\xb0', '(' + Math.round(event.targetX), Math.round(event.targetY), Math.round(event.targetZ) + ')'])
 
                     debug(strs.join(' '))
                 }
@@ -1010,16 +1010,16 @@ module.exports = function SkillPrediction(dispatch) {
     function sDefendSuccessHandler(event) {
         if (isMe(event.cid))
             if (currentAction && currentAction.skill == serverAction.skill) currentAction.defendSuccess = true
-            else if (config.DEFEND_SUCCESS_STRICT || job != 10) return false
+            else if (config.defend_success_strict || job != 10) return false
     }
 
 
     function sCannotStartSkillHandler(event) {
-        if (config.DEBUG) debug('<- S_CANNOT_START_SKILL ' + skillId(event.skill, true))
+        if (config.debug) debug('<- S_CANNOT_START_SKILL ' + skillId(event.skill, true))
 
         if (skillInfo(event.skill, true)) {
-            if (config.SKILL_DELAY_ON_FAIL && config.SKILL_RETRY_COUNT && currentAction && (!serverAction || currentAction.skill != serverAction.skill) && event.skill == currentAction.skill - 0x4000000)
-                delayNext += config.SKILL_RETRY_MS
+            if (config.skill_delay_on_fail && config.skill_retry_count && currentAction && (!serverAction || currentAction.skill != serverAction.skill) && event.skill == currentAction.skill - 0x4000000)
+                delayNext += config.skill_retry_ms
 
             return false
         }
@@ -1115,7 +1115,7 @@ module.exports = function SkillPrediction(dispatch) {
 
         opts.distance = (multiStage ? get(info, 'distance', opts.stage) : info.distance) || 0
 
-        let serverTimeoutTime = ping.max + (config.SKILL_RETRY_COUNT * config.SKILL_RETRY_MS) + config.SERVER_TIMEOUT,
+        let serverTimeoutTime = ping.max + (config.skill_retry_count * config.skill_retry_ms) + config.server_timeout,
             speed = opts.speed + (info.type == 'charging' ? opts.chargeSpeed : 0)
 
         if (info.type == 'teleport' && opts.stage == info.teleportStage) {
@@ -1239,9 +1239,9 @@ module.exports = function SkillPrediction(dispatch) {
 
         if (!currentAction) return
 
-        if (config.DEBUG) debug(['<* S_ACTION_END', skillId(currentAction.skill), type || 0, currentLocation.w + '\xb0', (distance || 0) + 'u'].join(' '))
+        if (config.debug) debug(['<* S_ACTION_END', skillId(currentAction.skill), type || 0, currentLocation.w + '\xb0', (distance || 0) + 'u'].join(' '))
 
-        if (oopsLocation && (config.FORCE_CLIP_STRICT || !currentLocation.inAction)) sendInstantMove(oopsLocation)
+        if (oopsLocation && (config.force_clip_strict || !currentLocation.inAction)) sendInstantMove(oopsLocation)
         else movePlayer(distance)
 
         dispatch.toClient('S_ACTION_END', 1, {
@@ -1309,11 +1309,11 @@ module.exports = function SkillPrediction(dispatch) {
     }
 
     function retry(cb, count = 1) {
-        if (count > config.SKILL_RETRY_COUNT) return
+        if (count > config.skill_retry_count) return
 
         setTimeout(() => {
             if (cb()) retry(cb, count + 1)
-        }, config.SKILL_RETRY_MS)
+        }, config.skill_retry_ms)
     }
 
     // The real server uses loaded maps and a physics engine for skill movement, which would be costly to simulate
