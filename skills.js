@@ -120,8 +120,7 @@ module.exports = function SkillPrediction(dispatch) {
     function disable() {
         for (let pointer of packetsHooks) {
             dispatch.unhook(pointer)
-            id(config.debug)
-            debug(pointer)
+            if(config.debug)debug(pointer)
         }
         packetsHooks = []
         abnormality.enabled = false
@@ -214,7 +213,7 @@ module.exports = function SkillPrediction(dispatch) {
                 }
                 break
             case 'ping':
-                command.message(`Ping: ${ping.history.length ? `Avg=${Math.round(ping.avg)} Min=${ping.min} Max=${ping.max} Jitter=${ping.max - ping.min} Samples=${ping.history.length}` : '???'}`)
+                command.message(`Ping: Min=${ping.min} Max=${ping.max} Jitter=${ping.max - ping.min}`)
                 break
         }
     })
