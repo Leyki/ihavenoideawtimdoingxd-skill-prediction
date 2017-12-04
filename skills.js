@@ -61,7 +61,8 @@ module.exports = function SkillPrediction(dispatch) {
         stageEndTime = 0,
         stageEndTimeout = null,
         debugActionTime = 0,
-        packetsHooks = []
+        packetsHooks = [],
+        zFix = 0
 
 
     LoadConfiguration()
@@ -387,6 +388,14 @@ module.exports = function SkillPrediction(dispatch) {
             let info = skillInfo(currentAction.skill)
 
             if (info && info.distance) return false
+        }
+
+        //try to fix z location 
+        if(event.z2 != 0 ) {
+            if(event.z2 >= event.z)
+                zFix = 55
+            else
+                zFix= -55
         }
 
         currentLocation = {
@@ -1247,7 +1256,7 @@ module.exports = function SkillPrediction(dispatch) {
             source: myChar(),
             x: currentLocation.x,
             y: currentLocation.y,
-            z: currentLocation.z,
+            z: currentLocation.z + zFix,
             w: currentLocation.w,
             model,
             skill: currentAction.skill,
@@ -1274,6 +1283,7 @@ module.exports = function SkillPrediction(dispatch) {
         if (actionNumber > 0xffffffff) actionNumber = 0x80000000
 
         oopsLocation = currentAction = null
+        zFix = 0
     }
 
     function sendCannotStartSkill(skill) {
