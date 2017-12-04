@@ -2676,7 +2676,7 @@ module.exports = {
 				type: 'charging',
 				length: [800, 1600],
 				noInterrupt: [26, 27, 38],
-				autoRelease: 0,
+				//autoRelease: 0,
 				glyphs: {
 					28031: { chargeSpeed: 0.25 }
 				}
