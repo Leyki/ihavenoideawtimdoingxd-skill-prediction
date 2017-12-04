@@ -1966,7 +1966,7 @@ module.exports = {
 			},
 			0: {
 				type: 'charging',
-				length: [1000, 1000],
+				length: [1010, 1010],
 				noInterrupt: [7, 26],
 				autorelease: 0,
 				abnormals: {
