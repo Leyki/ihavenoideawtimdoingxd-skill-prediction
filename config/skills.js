@@ -2575,10 +2575,10 @@ module.exports = {
 			}
 		},
 		3: { // Healing Circle
-			0: { length: 1750 }
+			0: { length: 1760 }
 		},
 		5: { // Blessing of Shakan
-			0: { length: 1300 }
+			0: { length: 1290 }
 		},
 		6: { // Arise
 			0: { length: 830 }
@@ -2592,14 +2592,14 @@ module.exports = {
 			}
 		},
 		10: { // Purifying Circle
-			0: { length: 1275 }
+			0: { length: 1270 }
 		},
 		11: { // Metamorphic Blast
 			0: { length: 830 }
 		},
 		12: { // Resurrect
 			0: {
-				length: 5915,
+				length: 5900,
 				glyphs: {
 					28045: { speed: 1.15 }
 				},
@@ -2626,7 +2626,7 @@ module.exports = {
 			}
 		},
 		18: { // Heal Thyself
-			0: { length: 1250 }
+			0: { length: 1260 }
 		},
 		19: { // Focus Heal
 			'*': { noRetry: true },
@@ -2644,11 +2644,11 @@ module.exports = {
 			0: { length: 650 }
 		},
 		23: { // Blessing of Balder
-			0: { length: 1300 }
+			0: { length: 1290 }
 		},
 		26: { // Fiery Escape
 			0: {
-				length: 1125,
+				length: 1105,
 				distance: -250.5,
 				abnormals: {
 					7692002: { chain: 6 },
@@ -2671,12 +2671,12 @@ module.exports = {
 			30: { length: 1040 }
 		},
 		28: { // Mana Charge
-			'*': { length: 825 },
+			'*': { length: 835 },
 			0: {
 				type: 'charging',
 				length: [800, 1600],
 				noInterrupt: [26, 27, 38],
-				//autoRelease: 0
+				autoRelease: 0,
 				glyphs: {
 					28031: { chargeSpeed: 0.25 }
 				}
@@ -2688,7 +2688,7 @@ module.exports = {
 		29: { // Triple Nemesis
 			0: { length: 800 },
 			1: { length: 800 },
-			2: { length: 1250 }
+			2: { length: 1245 }
 		},
 		30: { // Plague of Exhaustion
 			'*': { noRetry: true },
@@ -2730,7 +2730,7 @@ module.exports = {
 			}
 		},
 		34: { // Restorative Burst
-			0: { length: 1430 }
+			0: { length: 1420 }
 		},
 		35: { // Energy Stars
 			'*': { noRetry: true },
@@ -2763,7 +2763,7 @@ module.exports = {
 		},
 		38: { // Backstep
 			0: {
-				length: 665,
+				length: 650,
 				distance: -200,
 				forceClip: true,
 				abnormals: {
@@ -2860,7 +2860,7 @@ module.exports = {
 		},
 		10: { // Resurrect
 			0: {
-				length: 8070, // 8050, 8060 //
+				length: 8050, // 8050, 8060 //
 				glyphs: {
 					27049: { speed: 1.2 },
 					27079: { speed: 1.2 }
@@ -2890,22 +2890,22 @@ module.exports = {
 			}
 		},
 		13: { // Aura of the Merciless
-			'*': { length: 1300 }, //
+			'*': { length: 1290 }, //
 			0: true,
 			50: true
 		},
 		14: { // Aura of the Swift
-			'*': { length: 1300 },
+			'*': { length: 1290 },
 			0: true,
 			50: true
 		},
 		15: { // Aura of the Unyielding
-			'*': { length: 1300 },
+			'*': { length: 1290 },
 			0: true,
 			50: true
 		},
 		16: { // Aura of the Tenacious
-			'*': { length: 1300 },
+			'*': { length: 1290 },
 			0: true,
 			50: true
 		},

@@ -225,7 +225,7 @@ module.exports = function SkillPrediction(dispatch) {
         ;({cid, model} = event)
         race = Math.floor((model - 10101) / 100)
         job = (model - 10101) % 100
-        if (config.debug) debug('[Skill Prediction] Class', job)
+        if (config.debug) debug('Class ' + job)
 
         /*		let timeoutData = get(timeouts, 'timeouts', job) || get(timeouts, 'timeouts', '*')
                 if(timeoutData)	{
