@@ -668,6 +668,25 @@ module.exports = function SkillPrediction(dispatch) {
             }
         }
 
+        if (info.blockedByBuff) {
+            if (Array.isArray(info.blockedByBuff)) {
+                let found = false
+                for (let buff of info.blockedByBuff)
+                    if (abnormality.exists(buff)) {
+                        found = true
+                        break
+                    }
+                if (found) {
+                    sendCannotStartSkill(event.skill)
+                    return false
+                }
+            }
+            else if (abnormality.exists(info.blockedByBuff)) {
+                sendCannotStartSkill(event.skill)
+                return false
+            }
+        }
+
         if (type != 'C_NOTIMELINE_SKILL') updateLocation(event, false, specialLoc)
         lastStartLocation = currentLocation
 
