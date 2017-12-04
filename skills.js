@@ -75,7 +75,8 @@ module.exports = function SkillPrediction(dispatch) {
             config = JSON.parse(fs.readFileSync(CONFIG_PATH, 'utf8'))
         }
         catch (err) {
-            throw Error(`[Skill Prediction] ${err}`)
+            console.error(`[Skill Prediction] Smth wrong with config.js... Error: ${err}`)
+            process.exit()
         }
     }
 
@@ -116,6 +117,7 @@ module.exports = function SkillPrediction(dispatch) {
         addHook('C_CANCEL_SKILL', 1, cCancelSkillHandler)
         addHook('S_ACTION_STAGE', 1, sActionStageHandler)
         abnormality.enabled = true
+
     }
 
     function disable() {
