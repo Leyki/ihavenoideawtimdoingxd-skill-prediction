@@ -1156,7 +1156,7 @@ module.exports = function SkillPrediction(dispatch) {
             opts.distance = 0
         }
         else if (info.type == 'holdInfinite' || info.type == 'charging' && opts.stage > 0 && !(opts.stage < info.length.length)) {
-            serverTimeout = setTimeout(sendActionEnd, serverTimeoutTime, 6)
+            serverTimeout = setTimeout(sendActionEnd, serverTimeoutTime + (info.autoRelease || 0 / speed), 6)
 
             if (info.type == 'charging' && info.autoRelease !== undefined) {
                 stageEnd = () => {

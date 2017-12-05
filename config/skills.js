@@ -1358,11 +1358,11 @@ module.exports = {
 				type: 'charging',
 				length: [650, 650, 650],
 				noInterrupt: [2, 4, 10, 15, 18, 24, 25, 30],
-				//autorelease: 2525
+				autorelease: 2525,
 				glyphs: {
 					24067: {
-						chargeSpeed: 0.25
-						//autorelease: 2025
+						chargeSpeed: 0.25,
+						autorelease: 2025
 					} // Only these affect charge hold time
 				},
 				abnormals: {
@@ -1527,13 +1527,13 @@ module.exports = {
 				type: 'charging',
 				length: [650, 650, 650],
 				noInterrupt: [2, 3, 4, 15, 18, 24, 25, 30],
-				//autorelease: 2525
+				autorelease: 2525,
 				glyphs: {
 					24009: { chargeSpeed: 0.25 },
 					24052: { chargeSpeed: 0.25 },
 					24096: {
-						chargeSpeed: 0.3
-						//autorelease: 2025
+						chargeSpeed: 0.3,
+						autorelease: 2025
 					}
 				},
 				abnormals: {
@@ -1968,7 +1968,7 @@ module.exports = {
 				type: 'charging',
 				length: [1010, 1010],
 				noInterrupt: [7, 26],
-				autorelease: 0,
+				autorelease: 200,
 				abnormals: {
 					25140: { chargeSpeed: 0.3 }
 				}
@@ -2278,7 +2278,7 @@ module.exports = {
 				type: 'charging',
 				length: [600, 600, 600],
 				noInterrupt: [4, 22],
-				//autoRelease: 2550,
+				autoRelease: 2550,
 				abnormals: {
 					26180: { chargeSpeed: 0.3 },
 					601450: { chargeSpeed: 0.5 }
@@ -2329,7 +2329,7 @@ module.exports = {
 				type: 'charging',
 				length: [800, 800, 800],
 				noInterrupt: [3, 22],
-				//autoRelease: 2550,
+				autoRelease: 2550,
 				abnormals: {
 					26160: { chargeSpeed: 0.3 },
 					26170: { chargeSpeed: 0.3 },
@@ -3673,7 +3673,7 @@ module.exports = {
 			},
 			0: {
 				type: 'charging',
-				autoRelease: 0,
+				autoRelease: 200,
 				noRetry:true
 			},
 			10: { distance: -50 },
