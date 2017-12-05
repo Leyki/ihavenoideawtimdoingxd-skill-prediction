@@ -2194,6 +2194,7 @@ module.exports = {
 				noInterrupt: [26],
 				teleportStage: 1,
 				noRetry: true,
+				dcType:'shortTel',
 				abnormals: {
 					400800: { chain: 6 },
 					400801: { chain: 6 },
