@@ -399,10 +399,11 @@ module.exports = function SkillPrediction(dispatch) {
         if (currentAction) {
             let info = skillInfo(currentAction.skill)
 
-            if (info && info.dcType != 'movingCharge' & 
+            if (info && info.distance) return false
+           /* if (info && info.dcType != 'movingCharge' & 
                 info.dcType != 'shootingmovingskill' &
                 info.dcType!= 'movingSkill')
-                    return false
+                    return false*/
         }
 
         //try to fix z location 
