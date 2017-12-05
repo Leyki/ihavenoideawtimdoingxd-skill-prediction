@@ -1966,9 +1966,10 @@ module.exports = {
 			},
 			0: {
 				type: 'charging',
-				length: [1010, 1010],
+				length: [1000, 1000],
 				noInterrupt: [7, 26],
 				autorelease: 200,
+                noRetry:true,
 				abnormals: {
 					25140: { chargeSpeed: 0.3 }
 				}
@@ -2096,7 +2097,8 @@ module.exports = {
 			0: {
 				type: 'charging',
 				length: [1000, 1000],
-				noInterrupt: [7, 26]
+				noInterrupt: [7, 26],
+                noRetry:true
 			},
 			10: { noInterrupt: [7, 26] },
 			11: { noInterrupt: [7, 26] },
@@ -2279,6 +2281,7 @@ module.exports = {
 				length: [600, 600, 600],
 				noInterrupt: [4, 22],
 				autoRelease: 2550,
+                noRetry:true,
 				abnormals: {
 					26180: { chargeSpeed: 0.3 },
 					601450: { chargeSpeed: 0.5 }
@@ -2329,6 +2332,7 @@ module.exports = {
 				type: 'charging',
 				length: [800, 800, 800],
 				noInterrupt: [3, 22],
+                noRetry:true,
 				autoRelease: 2550,
 				abnormals: {
 					26160: { chargeSpeed: 0.3 },
@@ -2676,7 +2680,8 @@ module.exports = {
 				type: 'charging',
 				length: [800, 1600],
 				noInterrupt: [26, 27, 38],
-				//autoRelease: 0,
+				autoRelease: 3200,
+                noRetry:true,
 				glyphs: {
 					28031: { chargeSpeed: 0.25 }
 				}
@@ -2933,6 +2938,7 @@ module.exports = {
 			'*': { noInterrupt: [8, 17, 23] },
 			0: {
 				type: 'charging',
+                chargeLevels: [10, 10],
 				length: 1475,
 				//autoRelease: 0
 			},
@@ -2956,6 +2962,7 @@ module.exports = {
 			0: {
 				type: 'charging',
 				length: 1475,
+                chargeLevels: [10, 10],
 				//autoRelease: 0
 			},
 			10: {
@@ -3673,7 +3680,7 @@ module.exports = {
 			},
 			0: {
 				type: 'charging',
-				autoRelease: 200,
+				autoRelease: 100,
 				noRetry:true
 			},
 			10: { distance: -50 },

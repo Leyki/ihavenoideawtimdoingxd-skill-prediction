@@ -554,9 +554,9 @@ module.exports = function SkillPrediction(dispatch) {
                     }
                     else sendActionEnd(10)
                 }
-                else if (info.type == 'charging') sendGrantSkill(modifyChain(skill, 10 + currentAction.stage))
+                else if(info.type == 'charging') grantCharge(skill, info, currentAction.stage)
             }
-            else if (info.type == 'grantCharge') sendGrantSkill(modifyChain(skill, 10 + storedCharge))
+            else if(info.type == 'grantCharge') grantCharge(skill, info, storedCharge)
 
             if (send) toServerLocked(data)
             return
@@ -1143,40 +1143,48 @@ module.exports = function SkillPrediction(dispatch) {
         })
 
         opts.distance = (multiStage ? get(info, 'distance', opts.stage) : info.distance) || 0
+        stageEnd = null
 
         let serverTimeoutTime = ping.max + (config.skill_retry_count * config.skill_retry_ms) + config.server_timeout,
             speed = opts.speed + (info.type == 'charging' ? opts.chargeSpeed : 0)
 
-        if (info.type == 'teleport' && opts.stage == info.teleportStage) {
-            opts.distance = Math.min(opts.distance, Math.max(0, calcDistance(currentLocation, opts.targetLoc) - 15)) // Client is approx. 15 units off
-            sendInstantMove(Object.assign(applyDistance(currentLocation, opts.distance), {
-                z: opts.targetLoc.z,
-                w: currentLocation.w
-            }))
-            opts.distance = 0
-        }
-        else if (info.type == 'holdInfinite' || info.type == 'charging' && opts.stage > 0 && !(opts.stage < info.length.length)) {
-            serverTimeout = setTimeout(sendActionEnd, serverTimeoutTime + (info.autoRelease || 0 / speed), 6)
+        switch(info.type) {
+ /*           case 'dynamicDistance':
+                opts.distance = calcDistance(currentLocation, opts.targetLoc)
+                break*/
+            case 'teleport':
+                if(opts.stage != info.teleportStage) break
 
-            if (info.type == 'charging' && info.autoRelease !== undefined) {
-                stageEnd = () => {
-                    toServerLocked('C_PRESS_SKILL', 1, {
-                        skill: opts.skill,
-                        start: false,
-                        x: currentLocation.x,
-                        y: currentLocation.y,
-                        z: currentLocation.z,
-                        w: currentLocation.w
-                    })
-                    sendGrantSkill(modifyChain(opts.skill, 10 + opts.stage))
+                opts.distance = Math.min(opts.distance, Math.max(0, calcDistance(currentLocation, opts.targetLoc) - 15)) // Client is approx. 15 units off
+                sendInstantMove(Object.assign(applyDistance(currentLocation, opts.distance), {z: opts.targetLoc.z, w: currentLocation.w}))
+                opts.distance = 0
+                break
+            case 'charging':
+                if(opts.stage == 0 || opts.stage < info.length.length) break
+
+                if(info.autoRelease !== undefined) {
+                    stageEnd = () => {
+                        toServerLocked('C_PRESS_SKILL', 1, {
+                            skill: opts.skill,
+                            start: false,
+                            x: currentLocation.x,
+                            y: currentLocation.y,
+                            z: currentLocation.z,
+                            w: currentLocation.w
+                        })
+                        grantCharge(opts.skill, info, opts.stage)
+                    }
+
+                    if(info.autoRelease === 0) {
+                        stageEnd()
+                        stageEnd = null
+                    }
+                    else stageEndTimeout = setTimeout(stageEnd, info.autoRelease / speed)
                 }
-                stageEndTimeout = setTimeout(stageEnd, info.autoRelease / speed)
-            }
-            else stageEnd = null
-
-            return
+            case 'holdInfinite':
+                serverTimeout = setTimeout(sendActionEnd, serverTimeoutTime, 6)
+                return
         }
-
         let length = Math.round((multiStage ? info.length[opts.stage] : info.length) / speed)
 
         if (length > serverTimeoutTime) serverTimeout = setTimeout(sendActionEnd, serverTimeoutTime, 6)
@@ -1234,8 +1242,9 @@ module.exports = function SkillPrediction(dispatch) {
         stageEndTimeout = setTimeout(stageEnd, stageEndTime - Date.now())
     }
 
-    function sendGrantSkill(skill) {
-        dispatch.toClient('S_GRANT_SKILL', 1, {skill})
+    function grantCharge(skill, info, stage) {
+        let levels = info.chargeLevels
+        dispatch.toClient('S_GRANT_SKILL', 1, {skill: modifyChain(skill, levels ? levels[stage] : 10 + stage)})
     }
 
     function sendInstantDash(location) {
