@@ -394,7 +394,7 @@ module.exports = function SkillPrediction(dispatch) {
 
         //try to fix z location 
         if(event.z2 != 0 ) {
-            if(event.z2 >= event.z)
+            if(event.z2 >= event.z1)
                 zFix = 55
             else
                 zFix= -55
