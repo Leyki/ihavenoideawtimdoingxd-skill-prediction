@@ -401,7 +401,7 @@ module.exports = function SkillPrediction(dispatch) {
 
             if (info && info.dcType != 'movingCharge' & 
                 info.dcType != 'shootingmovingskill' &
-                info.dcType!= 'movingSkill' && info.dcType != 'shortTel')
+                info.dcType!= 'movingSkill')
                     return false
         }
 
