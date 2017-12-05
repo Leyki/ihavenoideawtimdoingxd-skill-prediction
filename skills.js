@@ -218,6 +218,16 @@ module.exports = function SkillPrediction(dispatch) {
             case 'ping':
                 command.message(`Ping: Min=${ping.min} Max=${ping.max} Jitter=${ping.max - ping.min}`)
                 break
+            case 'clearskills':
+                if (!currentAction && !serverAction && !mounted && alive && !inCombat && !sending &&) {
+                    skillsCache = {}
+                    command.message('[Skill Prediction] Cache cleared')
+
+                }
+                else {
+                    command.message('[Skill Prediction] OwO!')
+                }
+            break    
         }
     })
 
@@ -389,7 +399,10 @@ module.exports = function SkillPrediction(dispatch) {
         if (currentAction) {
             let info = skillInfo(currentAction.skill)
 
-            if (info && info.distance) return false
+            if (info && info.dcType != 'movingCharge' & 
+                info.dcType != 'shootingmovingskill' &
+                info.dcType!= 'movingSkill')
+                    return false
         }
 
         //try to fix z location 

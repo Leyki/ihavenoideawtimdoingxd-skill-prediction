@@ -1969,6 +1969,7 @@ module.exports = {
 				length: [1000, 1000],
 				noInterrupt: [7, 26],
 				autorelease: 200,
+				dcType:'movingCharge',
                 noRetry:true,
 				abnormals: {
 					25140: { chargeSpeed: 0.3 }
@@ -2098,7 +2099,8 @@ module.exports = {
 				type: 'charging',
 				length: [1000, 1000],
 				noInterrupt: [7, 26],
-                noRetry:true
+				noRetry:true,
+				dcType:'movingCharge'
 			},
 			10: { noInterrupt: [7, 26] },
 			11: { noInterrupt: [7, 26] },
@@ -2109,7 +2111,8 @@ module.exports = {
 			0: {
 				type: 'lockon',
 				fixedSpeed: 1,
-				length: 4900
+				length: 4900,
+				dcType:'movingSkill'
 			},
 			10: {
 				type: 'lockonCast',
@@ -2124,7 +2127,9 @@ module.exports = {
 			}
 		},
 		21: { // Nerve Exhaustion
-			'*': { noRetry: true },
+			'*': { noRetry: true,
+					dcType:'movingSkill'
+			},
 			0: {
 				type: 'lockon',
 				fixedSpeed: 1,
@@ -2137,7 +2142,9 @@ module.exports = {
 			}
 		},
 		22: { // Burning Breath
-			'*': { noRetry: true },
+			'*': { noRetry: true,
+				dcType:'movingSkill'
+			 },
 			0: {
 				type: 'lockon',
 				fixedSpeed: 1,
@@ -2150,7 +2157,9 @@ module.exports = {
 			}
 		},
 		23: { // Mana Volley
-			'*': { noRetry: true },
+			'*': { noRetry: true,
+				dcType:'movingSkill'
+			 },
 			0: {
 				type: 'lockon',
 				fixedSpeed: 1,
@@ -2163,7 +2172,9 @@ module.exports = {
 			}
 		},
 		25: { // Time Gyre
-			'*': { noRetry: true },
+			'*': { noRetry: true,
+				dcType:'movingSkill'
+			},
 			0: {
 				type: 'lockon',
 				fixedSpeed: 1,
@@ -3523,7 +3534,8 @@ module.exports = {
 				fixedSpeed: 1,
 				noRetry: true,
 				length: 1195,
-				noInterrupt: [1]
+				noInterrupt: [1],
+				dcType: 'shootingmovingskill'
 			},
 			1: true,
 			2: true
@@ -3533,7 +3545,8 @@ module.exports = {
 			0: {
 				type: 'lockon',
 				fixedSpeed: 1,
-				length: 59900
+				length: 59900,
+				dcType:'movingSkill'
 			},
 			1: {
 				type: 'lockonCast',
@@ -3650,7 +3663,8 @@ module.exports = {
 		6: { // Time Bomb
 			'*': {
 				fixedSpeed: 1,
-				length: 1010
+				length: 1010,
+				dcType: 'shootingmovingskill'
 			},
 			1: true,
 			2: true
@@ -3660,12 +3674,14 @@ module.exports = {
 			1: {
 				fixedSpeed: 1,
 				noInterrupt: [7],
-				noRetry: true
+				noRetry: true,
+				dcType: 'shootingmovingskill'
 			},
 			2: {
 				fixedSpeed: 1,
 				noInterrupt: [7],
-				noRetry: true
+				noRetry: true,
+				dcType: 'shootingmovingskill'
 			},
 			3: {
 				requiredBuff: 10152040,
@@ -3681,7 +3697,8 @@ module.exports = {
 			0: {
 				type: 'charging',
 				autoRelease: 100,
-				noRetry:true
+				noRetry:true,
+				dcType: 'movingCharge'
 			},
 			10: { distance: -50 },
 			11: { distance: -100 }
@@ -3795,7 +3812,8 @@ module.exports = {
 		18: { // HB
 			'*': {
 				fixedSpeed: 1,
-				length: 1430
+				length: 1430,
+				dcType: 'shootingmovingskill'
 			},
 			1: true,
 			2: true
