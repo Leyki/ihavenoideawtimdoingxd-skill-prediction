@@ -219,7 +219,7 @@ module.exports = function SkillPrediction(dispatch) {
                 command.message(`Ping: Min=${ping.min} Max=${ping.max} Jitter=${ping.max - ping.min}`)
                 break
             case 'clearskills':
-                if (!currentAction && !serverAction && !mounted && alive && !inCombat && !sending &&) {
+                if (!currentAction && !serverAction && !mounted && alive && !inCombat && !sending ) {
                     skillsCache = {}
                     command.message('[Skill Prediction] Cache cleared')
 
