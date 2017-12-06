@@ -15,6 +15,11 @@ const INTERRUPT_TYPES = {
     'lockonCast': 36
 }
 
+const Flags = {
+	Player: 0x04000000,
+	CC: 0x08000000
+}
+
 module.exports = function SkillPrediction(dispatch) {
     const ping = Ping(dispatch),
         abnormality = AbnormalityPrediction(dispatch),
@@ -594,12 +599,16 @@ module.exports = function SkillPrediction(dispatch) {
         }
 
         if (currentAction) {
+            if(currentAction.skill & Flags.CC && (currentAction.skill & 0xffffff !== model * 100 + 2 || info.type !== 'retaliate')) {
+            	sendCannotStartSkill(event.skill)
+                return false
+            }
             let currentSkill = currentAction.skill - 0x4000000,
                 currentSkillBase = Math.floor(currentSkill / 10000),
                 currentSkillSub = currentSkill % 100
 
-            // 6190 = Pushback, Stun - 6811-6822 = Stagger + Knockdown for each race
-            if (currentSkillBase == 6190 || (currentSkillBase == 6811 + race && info.type != 'retaliate')) {
+           
+            if (currentSkillBase == 6190 ) {
                 if (currentAction.skill != 20800 && (!abnormality.exists(9691000) || !abnormality.exists(9691016))) {
                     sendCannotStartSkill(event.skill)
                     return false
@@ -625,6 +634,7 @@ module.exports = function SkillPrediction(dispatch) {
 
             if (chain !== undefined) {
                 if (chain === null) {
+                    updateLocation(event, false, specialLoc)
                     sendActionEnd(4)
                     if (send) toServerLocked(data)
                     return
@@ -1020,8 +1030,7 @@ module.exports = function SkillPrediction(dispatch) {
         }
     }
 
-    dispatch.hook('C_CHECK_VERSION', 'raw', () => {
-        dispatch.hook('S_EACH_SKILL_RESULT', [321553, 321554].includes(dispatch.base.protocolVersion) ? 3 : 4, event => {
+    dispatch.hook('S_EACH_SKILL_RESULT', 4, event => {
             if (isMe(event.target) && event.setTargetAction) {
                 if (config.debug) {
                     let duration = Date.now() - debugActionTime,
@@ -1047,7 +1056,6 @@ module.exports = function SkillPrediction(dispatch) {
                 updateLocation()
             }
         })
-    })
 
 
     function sDefendSuccessHandler(event) {
@@ -1058,7 +1066,7 @@ module.exports = function SkillPrediction(dispatch) {
 
 
     function sCannotStartSkillHandler(event) {
-        if (config.debug) debug('<- S_CANNOT_START_SKILL ' + skillId(event.skill, true))
+        if(config.debug) debug('<- S_CANNOT_START_SKILL ' + skillId(event.skill, Flags.Player))
 
         if (skillInfo(event.skill, true)) {
             if (config.skill_delay_on_fail && config.skill_retry_count && currentAction && (!serverAction || currentAction.skill != serverAction.skill) && event.skill == currentAction.skill - 0x4000000)
@@ -1392,12 +1400,28 @@ module.exports = function SkillPrediction(dispatch) {
         return id - ((id & 0xffffff) % 100) + chain
     }
 
-    //Information about skill
-    function skillId(id, local) {
-        if (!local) id -= 0x4000000
+	function skillId(id, flagAs) {
+		id |= flagAs
 
-        return [Math.floor(id / 10000), Math.floor(id / 100) % 100, id % 100].join('-')
-    }
+		let skillFlags = ['[?1]', '[?2]', 'P', 'C', '[?5]', '[?6]', '[?7]', '[?8]'],
+			flags = ''
+
+		for(let i = 0, x = id >>> 24; x; i++, x >>>= 1)
+			if(x & 1) flags += skillFlags[i]
+
+		id = (id & 0xffffff).toString()
+
+		switch(flags) {
+			case 'P':
+				id = [id.slice(0, -4), id.slice(-4, -2), id.slice(-2)].join('-')
+				break
+			case 'C':
+				id = [id.slice(0, -2), id.slice(-2)].join('-')
+				break
+		}
+
+		return flags + id
+	}
 
     //Load info about skill
     function skillInfo(id, local) {
