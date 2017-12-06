@@ -3766,6 +3766,7 @@ module.exports = {
 			'*': {
 				length: 5800,
 				distance: -269.09,
+				noInterrupt: [13],
 				chains: {
 					'2-1': 30,
 					3: 30,
