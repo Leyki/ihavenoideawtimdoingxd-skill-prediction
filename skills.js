@@ -1204,6 +1204,7 @@ module.exports = function SkillPrediction(dispatch) {
                     }
                     else stageEndTimeout = setTimeout(stageEnd, info.autoRelease / speed)
                 }
+                return
             case 'holdInfinite':
                 serverTimeout = setTimeout(sendActionEnd, serverTimeoutTime, 6)
                 return
