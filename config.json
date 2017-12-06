@@ -6,7 +6,7 @@
 	"skill_retry_jittercomp": 20,
 	"skill_retry_always": false,
 	"skill_delay_on_fail": true,
-	"server_timeout": 150,
+	"server_timeout": 180,
 	"force_clip_strict": true,
 	"debug_glyphs": false,
 	"debug": false,
