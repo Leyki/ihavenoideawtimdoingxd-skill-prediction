@@ -2,19 +2,39 @@
 # **Unofficial Skill prediction**
 Simulates skills client-side, eliminating ping-based delays and animation lock.
 
-## Information
-***Original SP by Pinkie:*** https://github.com/pinkipi/skill-prediction
 
-**Current fork stable branch:** https://github.com/SaltyMonkey/skill-prediction/tree/master
+## Repositories
 
-**Current fork experimental Branch:** https://github.com/SaltyMonkey/skill-prediction/tree/experimental
+### **Main repository:** https://github.com/pinkipi/skill-prediction
+
+If you want anything fixed pls consider donating to :b:inkie^
 
 
-**About branches:** https://github.com/SaltyMonkey/skill-prediction/wiki/Branches
+### **Stable branch:** https://github.com/SaltyMonkey/skill-prediction/tree/master
 
-**Wiki:** https://github.com/SaltyMonkey/skill-prediction/wiki
+The one you're probably at looking right now.
 
-## Warning:
+
+### **Experimental Branch:** https://github.com/SaltyMonkey/skill-prediction/tree/experimental
+
+The "Playground" Branch, might occasionally encounter itself unusable because someone forgot a `,` or someone duplicated a function.
+It also includes some QoLs for logging skills.
+
+
+### **KTera-PTS branch:** https://github.com/SaltyMonkey/skill-prediction/tree/KTera-PTS
+
+Currently being worked on, we still heavily require someone logging on it to advance further though(config templates will get done sooner or later to ease adding data). I'll leave a simple guide on how to log with the debugger and on what we need exactly hopefully soon, if you wanna help still, feel free to do so already.
+
+
+**More on branches:** https://github.com/SaltyMonkey/skill-prediction/wiki/Branches
+
+
+## Useful info
+
+***Wiki:*** https://github.com/SaltyMonkey/skill-prediction/wiki
+
 ***(!!!)About SP and GitHub:*** https://github.com/SaltyMonkey/skill-prediction/wiki/Forks
 
-Disabling a skill in SP: https://github.com/SaltyMonkey/skill-prediction/wiki#commenting-in-javascriptaka-if-you-want-a-skill-to-not-be-affected-by-sp
+***Disabling a particular skill in SP:*** https://github.com/SaltyMonkey/skill-prediction/wiki#commenting-in-javascriptaka-if-you-want-a-skill-to-not-be-affected-by-sp
+
+***Basic SP troubleshooting:*** Soon™

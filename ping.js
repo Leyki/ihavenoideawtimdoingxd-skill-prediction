@@ -20,7 +20,7 @@ class Ping {
 			this._timeout = setTimeout(ping, PING_TIMEOUT)
 		}
 
-		dispatch.hook('S_SPAWN_ME', 1, () => { ping() })
+		dispatch.hook('S_SPAWN_ME', 1, () => { this._timeout = setTimeout(ping, PING_INTERVAL) })
 		dispatch.hook('S_LOAD_TOPO', 1, event => { clearTimeout(this._timeout) })
 		dispatch.hook('S_RETURN_TO_LOBBY', 1, () => { clearTimeout(this._timeout) })
 
