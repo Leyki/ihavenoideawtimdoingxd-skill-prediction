@@ -3697,7 +3697,7 @@ module.exports = {
 			},
 			0: {
 				type: 'charging',
-				autoRelease: 100,
+				autoRelease: 0,
 				noRetry:true,
 				dcType: 'movingCharge'
 			},
