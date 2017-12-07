@@ -3697,8 +3697,8 @@ module.exports = {
 		},
 		9: { // Mana Missiles
 			'*': { 
-				blockCancelPacket: true,
-				length: 1260,
+				//blockCancelPacket: true,
+				length: 1240,
 				noInterrupt: [20] 
 			},
 			0: {
@@ -3772,7 +3772,7 @@ module.exports = {
 			'*': {
 				length: 5800,
 				distance: -269.09,
-				noInterrupt: [13],
+				//noInterrupt: [13],
 				chains: {
 					'2-1': 30,
 					3: 30,
