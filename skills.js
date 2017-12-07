@@ -16,8 +16,8 @@ const INTERRUPT_TYPES = {
 }
 
 const Flags = {
-	Player: 0x04000000,
-	CC: 0x08000000
+    Player: 0x04000000,
+    CC: 0x08000000
 }
 
 module.exports = function SkillPrediction(dispatch) {
@@ -128,7 +128,7 @@ module.exports = function SkillPrediction(dispatch) {
     function disable() {
         for (let pointer of packetsHooks) {
             dispatch.unhook(pointer)
-            if(config.debug)debug(pointer)
+            if (config.debug) debug(pointer)
         }
         packetsHooks = []
         abnormality.enabled = false
@@ -142,9 +142,8 @@ module.exports = function SkillPrediction(dispatch) {
     command.add('sp', (option, value) => {
         switch (option) {
             case 'info':
-                command.message('Unofficial SP. Date:03/12/17')
-                command.message(`Config: Timeout: ${config.server_timeout}, retries: ${config.skill_retry_count},
-					jitter comp: ${config.jitter_compensation}, debug: ${config.debug}`)
+                command.message('Unofficial SP. Date:07/12/17')
+                command.message(`Config: Timeout: ${config.server_timeout}, retries: ${config.skill_retry_count},jitter comp: ${config.jitter_compensation}, debug: ${config.debug}`)
                 break
             case 'timeout':
                 if (value === null || value === undefined || value === "") {
@@ -224,7 +223,7 @@ module.exports = function SkillPrediction(dispatch) {
                 command.message(`Ping: Min=${ping.min} Max=${ping.max} Jitter=${ping.max - ping.min}`)
                 break
             case 'clearskills':
-                if (!currentAction && !serverAction && !mounted && alive && !inCombat && !sending ) {
+                if (!currentAction && !serverAction && !mounted && alive && !inCombat && !sending) {
                     skillsCache = {}
                     command.message('[Skill Prediction] Cache cleared')
 
@@ -232,7 +231,7 @@ module.exports = function SkillPrediction(dispatch) {
                 else {
                     command.message('[Skill Prediction] OwO!')
                 }
-            break    
+                break
         }
     })
 
@@ -405,19 +404,19 @@ module.exports = function SkillPrediction(dispatch) {
             let info = skillInfo(currentAction.skill)
 
             if (info && info.distance) return false
-           /* if (info && info.dcType != 'movingCharge' & 
-                info.dcType != 'shootingmovingskill' &
-                info.dcType!= 'movingSkill')
-                    return false*/
+            /* if (info && info.dcType != 'movingCharge' &
+                 info.dcType != 'shootingmovingskill' &
+                 info.dcType!= 'movingSkill')
+                     return false*/
         }
 
         //try to fix z location 
-        if(event.z2 != 0 ) {
-            if(event.z2 >= event.z1)
+        /*if (event.z2 != 0) {
+            if (event.z2 >= event.z1)
                 zFix = 55
             else
-                zFix= -55
-        }
+                zFix = -55
+        }*/
 
         currentLocation = {
 // This is not correct, but the midpoint location seems to be "close enough" for the client to not teleport the player
@@ -573,9 +572,9 @@ module.exports = function SkillPrediction(dispatch) {
                     }
                     else sendActionEnd(10)
                 }
-                else if(info.type == 'charging') grantCharge(skill, info, currentAction.stage)
+                else if (info.type == 'charging') grantCharge(skill, info, currentAction.stage)
             }
-            else if(info.type == 'grantCharge') grantCharge(skill, info, storedCharge)
+            else if (info.type == 'grantCharge') grantCharge(skill, info, storedCharge)
 
             if (send) toServerLocked(data)
             return
@@ -599,16 +598,16 @@ module.exports = function SkillPrediction(dispatch) {
         }
 
         if (currentAction) {
-            if(currentAction.skill & Flags.CC && (currentAction.skill & 0xffffff !== model * 100 + 2 || info.type !== 'retaliate')) {
-            	sendCannotStartSkill(event.skill)
+            if (currentAction.skill & Flags.CC && (currentAction.skill & 0xffffff !== model * 100 + 2 || info.type !== 'retaliate')) {
+                sendCannotStartSkill(event.skill)
                 return false
             }
             let currentSkill = currentAction.skill - 0x4000000,
                 currentSkillBase = Math.floor(currentSkill / 10000),
                 currentSkillSub = currentSkill % 100
 
-           
-            if (currentSkillBase == 6190 ) {
+
+            if (currentSkillBase == 6190) {
                 if (currentAction.skill != 20800 && (!abnormality.exists(9691000) || !abnormality.exists(9691016))) {
                     sendCannotStartSkill(event.skill)
                     return false
@@ -1031,31 +1030,31 @@ module.exports = function SkillPrediction(dispatch) {
     }
 
     dispatch.hook('S_EACH_SKILL_RESULT', 4, event => {
-            if (isMe(event.target) && event.setTargetAction) {
-                if (config.debug) {
-                    let duration = Date.now() - debugActionTime,
-                        strs = ['<- S_EACH_SKILL_RESULT.setTargetAction', skillId(event.targetAction), event.targetStage]
+        if (isMe(event.target) && event.setTargetAction) {
+            if (config.debug) {
+                let duration = Date.now() - debugActionTime,
+                    strs = ['<- S_EACH_SKILL_RESULT.setTargetAction', skillId(event.targetAction), event.targetStage]
 
-                    if (config.debug_loc) strs.push(...[event.targetW + '\xb0', '(' + Math.round(event.targetX), Math.round(event.targetY), Math.round(event.targetZ) + ')'])
+                if (config.debug_loc) strs.push(...[event.targetW + '\xb0', '(' + Math.round(event.targetX), Math.round(event.targetY), Math.round(event.targetZ) + ')'])
 
-                    debug(strs.join(' '))
-                }
-
-                if (currentAction && skillInfo(currentAction.skill)) sendActionEnd(9)
-
-                currentAction = serverAction = {
-                    x: event.targetX,
-                    y: event.targetY,
-                    z: event.targetZ,
-                    w: event.targetW,
-                    skill: event.targetAction,
-                    stage: event.targetStage,
-                    id: event.targetId
-                }
-
-                updateLocation()
+                debug(strs.join(' '))
             }
-        })
+
+            if (currentAction && skillInfo(currentAction.skill)) sendActionEnd(9)
+
+            currentAction = serverAction = {
+                x: event.targetX,
+                y: event.targetY,
+                z: event.targetZ,
+                w: event.targetW,
+                skill: event.targetAction,
+                stage: event.targetStage,
+                id: event.targetId
+            }
+
+            updateLocation()
+        }
+    })
 
 
     function sDefendSuccessHandler(event) {
@@ -1066,7 +1065,7 @@ module.exports = function SkillPrediction(dispatch) {
 
 
     function sCannotStartSkillHandler(event) {
-        if(config.debug) debug('<- S_CANNOT_START_SKILL ' + skillId(event.skill, Flags.Player))
+        if (config.debug) debug('<- S_CANNOT_START_SKILL ' + skillId(event.skill, Flags.Player))
 
         if (skillInfo(event.skill, true)) {
             if (config.skill_delay_on_fail && config.skill_retry_count && currentAction && (!serverAction || currentAction.skill != serverAction.skill) && event.skill == currentAction.skill - 0x4000000)
@@ -1168,24 +1167,30 @@ module.exports = function SkillPrediction(dispatch) {
         opts.distance = (multiStage ? get(info, 'distance', opts.stage) : info.distance) || 0
         stageEnd = null
 
-        let serverTimeoutTime = ping.max + (config.skill_retry_count * config.skill_retry_ms) + config.server_timeout,
-            speed = opts.speed + (info.type == 'charging' ? opts.chargeSpeed : 0)
+        let speed = opts.speed + (info.type == 'charging' ? opts.chargeSpeed : 0),
+            noTimeout = false
 
-        switch(info.type) {
- /*           case 'dynamicDistance':
-                opts.distance = calcDistance(currentLocation, opts.targetLoc)
-                break*/
+        if (serverAction && (serverAction.skill == currentAction.skill || Math.floor((serverAction.skill - 0x4000000) / 10000) == Math.floor((currentAction.skill - 0x4000000) / 10000)) && serverAction.stage == currentAction.stage)
+            noTimeout = true
+
+        switch (info.type) {
+            /*           case 'dynamicDistance':
+                           opts.distance = calcDistance(currentLocation, opts.targetLoc)
+                           break*/
             case 'teleport':
-                if(opts.stage != info.teleportStage) break
+                if (opts.stage != info.teleportStage) break
 
                 opts.distance = Math.min(opts.distance, Math.max(0, calcDistance(currentLocation, opts.targetLoc) - 15)) // Client is approx. 15 units off
-                sendInstantMove(Object.assign(applyDistance(currentLocation, opts.distance), {z: opts.targetLoc.z, w: currentLocation.w}))
+                sendInstantMove(Object.assign(applyDistance(currentLocation, opts.distance), {
+                    z: opts.targetLoc.z,
+                    w: currentLocation.w
+                }))
                 opts.distance = 0
                 break
             case 'charging':
-                if(opts.stage == 0 || opts.stage < info.length.length) break
+                if (opts.stage == 0 || opts.stage < info.length.length) break
 
-                if(info.autoRelease !== undefined) {
+                if (info.autoRelease !== undefined) {
                     stageEnd = () => {
                         toServerLocked('C_PRESS_SKILL', 1, {
                             skill: opts.skill,
@@ -1198,20 +1203,24 @@ module.exports = function SkillPrediction(dispatch) {
                         grantCharge(opts.skill, info, opts.stage)
                     }
 
-                    if(info.autoRelease === 0) {
+                    if (info.autoRelease === 0) {
                         stageEnd()
                         stageEnd = null
                     }
-                    else stageEndTimeout = setTimeout(stageEnd, info.autoRelease / speed)
+                    else stageEndTimeout = setTimeout(stageEnd, Math.round(info.autoRelease / speed))
                 }
-                return
+
             case 'holdInfinite':
-                serverTimeout = setTimeout(sendActionEnd, serverTimeoutTime, 6)
+                if (!noTimeout) serverTimeout = setTimeout(sendActionEnd, getServerTimeout(), 6)
                 return
         }
+
         let length = Math.round((multiStage ? info.length[opts.stage] : info.length) / speed)
 
-        if (length > serverTimeoutTime) serverTimeout = setTimeout(sendActionEnd, serverTimeoutTime, 6)
+        if (!noTimeout) {
+            let serverTimeoutTime = getServerTimeout()
+            if (length > serverTimeoutTime) serverTimeout = setTimeout(sendActionEnd, serverTimeoutTime, 6)
+        }
 
         if (multiStage) {
             if (!opts.moving) {
@@ -1254,6 +1263,10 @@ module.exports = function SkillPrediction(dispatch) {
         stageEnd = sendActionEnd.bind(null, info.type == 'dash' ? 39 : 0, opts.distance * opts.distanceMult)
         stageEndTime = Date.now() + length
         stageEndTimeout = setTimeout(stageEnd, length)
+    }
+
+    function getServerTimeout() {
+        return ping.max + (config.skill_retry_count * config.skill_retry_ms) + config.server_timeout
     }
 
     function clearStage() {
@@ -1402,28 +1415,28 @@ module.exports = function SkillPrediction(dispatch) {
         return id - ((id & 0xffffff) % 100) + chain
     }
 
-	function skillId(id, flagAs) {
-		id |= flagAs
+    function skillId(id, flagAs) {
+        id |= flagAs
 
-		let skillFlags = ['[?1]', '[?2]', 'P', 'C', '[?5]', '[?6]', '[?7]', '[?8]'],
-			flags = ''
+        let skillFlags = ['[?1]', '[?2]', 'P', 'C', '[?5]', '[?6]', '[?7]', '[?8]'],
+            flags = ''
 
-		for(let i = 0, x = id >>> 24; x; i++, x >>>= 1)
-			if(x & 1) flags += skillFlags[i]
+        for (let i = 0, x = id >>> 24; x; i++, x >>>= 1)
+            if (x & 1) flags += skillFlags[i]
 
-		id = (id & 0xffffff).toString()
+        id = (id & 0xffffff).toString()
 
-		switch(flags) {
-			case 'P':
-				id = [id.slice(0, -4), id.slice(-4, -2), id.slice(-2)].join('-')
-				break
-			case 'C':
-				id = [id.slice(0, -2), id.slice(-2)].join('-')
-				break
-		}
+        switch (flags) {
+            case 'P':
+                id = [id.slice(0, -4), id.slice(-4, -2), id.slice(-2)].join('-')
+                break
+            case 'C':
+                id = [id.slice(0, -2), id.slice(-2)].join('-')
+                break
+        }
 
-		return flags + id
-	}
+        return flags + id
+    }
 
     //Load info about skill
     function skillInfo(id, local) {

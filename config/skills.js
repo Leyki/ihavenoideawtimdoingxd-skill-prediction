@@ -2289,14 +2289,14 @@ module.exports = {
 		},
 		3: { // Radiant Arrow
 			'*': {
-				length: 1760,
+				length: 1770,
 				races: {
 					1: { length: 1600 }	// F.Human
 				}
 			},
 			0: {
 				type: 'charging',
-				length: [600, 600, 600],
+				length: [590, 590, 590],
 				noInterrupt: [4, 22],
 				autoRelease: 2550,
                 noRetry:true,
@@ -2341,14 +2341,14 @@ module.exports = {
 		},
 		4: { // Penetrating Arrow
 			'*': {
-				length: 1315,
+				length: 1320,
 				races: {
 					1: { length: 1275 }	// F.Human, inb4 racechange
 				}
 			},
 			0: {
 				type: 'charging',
-				length: [800, 800, 800],
+				length: [780, 780, 780],
 				noInterrupt: [3, 22],
                 noRetry:true,
 				autoRelease: 2550,
@@ -2400,7 +2400,7 @@ module.exports = {
 		},
 		5: { // Rain of Arrows
 			0: {
-				length: 3170,
+				length: 3160,
 				glyphs: {
 					26077: { speed: 1.4 }
 				},
@@ -2414,7 +2414,7 @@ module.exports = {
 		},
 		6: { // Backstep
 			0: {
-				length: 670,
+				length: 650,
 				distance: -200,
 				forceClip: true,
 				abnormals: {
@@ -2450,13 +2450,13 @@ module.exports = {
 			3: { length: 800 },
 			4: { length: 700 },
 			5: { length: 800 },
-			6: { length: 1233 } // 1240
+			6: { length: 1220 } // 1240
 		},
 		9: { // Slow Trap
-			0: { length: 1150 }
+			0: { length: 1170 }
 		},
 		10: { // Stunning Trap
-			0: { length: 1150 }
+			0: { length: 1170 }
 		},
 		12: { // Velik's Mark
 			0: { length: 200 }
@@ -2500,7 +2500,7 @@ module.exports = {
 		},
 		19: { // Poison Arrow
 			0: {
-				length: 1125,
+				length: 1115,
 				distance: -12.5,
 				noInterrupt: [22],
 				race: {
@@ -2564,7 +2564,7 @@ module.exports = {
 			0: {
 				type: 'dash',
 				fixedSpeed: 1,
-				length: 1075, // 1000
+				length: 1050, // 950-1025
 				distance: 413, // 412.078
 				noInterrupt: [33],
 				abnormals: {
