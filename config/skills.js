@@ -232,8 +232,8 @@ module.exports = {
 				distance: 120.28,
 				noInterrupt: [32],
 				race: {
-					/*2: { distance: 120.28 }, // M.Helf: 120.277
-					5: { distance: 120.28 }, // F.Aman: 120.277*/
+					//2: { distance: 120.28 }, // M.Helf: 120.277
+					//5: { distance: 120.28 }, // F.Aman: 120.277
 					7: { length: 1080 },
 					8: { distance: 128.89 }, // Popori: 128.889
 					9: { distance: 138.28 } // Elin: 138.284
@@ -3587,15 +3587,23 @@ module.exports = {
 		}
 	},
 	9: { // Gunner
+		'*': { consumeAbnormal: [10152000, 10152001, 10152010, 10152011, 10152050, 10152053, 10152054, 10152072, 10152082, 10152083, 10152085, 10152086, 10153093] },
 		1: { // Blast
 			'*': {
+				triggerAbnormal: { 10152011: 3100 },
 				fixedSpeed: 1,
 				noRetry: true,
 				length: 1195,
-				noInterrupt: [1]
+				noInterrupt: [1],
+				projectiles: [20]
 			},
 			1: true,
-			2: true
+			2: true,
+			20: {
+				type: 'userProjectile',
+				flyingSpeed: 800,
+				flyingDistance: 500
+			}
 		},
 		2: { // Bombardment
 			'*': { noRetry: true },
@@ -3606,6 +3614,7 @@ module.exports = {
 			},
 			1: {
 				type: 'lockonCast',
+				triggerAbnormal: { 10152082: 4100 },
 				length: 3000,
 				glyphs: {
 					30004: { speed: 1.25 }
@@ -3614,11 +3623,12 @@ module.exports = {
 		},
 		3: { // Scattershot
 			'*': {
+				triggerAbnormal: { 10152083: 4100 },
 				length: 1725,
 				distance: -108,
 				noInterrupt: [3, 20],
 				glyphs: {
-					30007: {
+					30007: { // The server also sends 30030 when active
 						movement: [
 							{
 								duration: 394,
@@ -3663,12 +3673,13 @@ module.exports = {
 			'*': {
 				length: 1525,
 				distance: 137.88,
-				noInterrupt: ['4-3', '4-4', 20],
+				noInterrupt: [20],
 				chains: {
 					'2-1': 30,
 					3: 30,
-					4: 4, //
-					'7-3': 30,
+					'4-1': 4,
+					'4-2': 4,
+					'4-30': 4,
 					'9-10': 30,
 					'9-11': 30,
 					10: 30,
@@ -3680,11 +3691,22 @@ module.exports = {
 				}
 			},
 			1: {
+				triggerAbnormal: {
+					10152000: 2100,
+					10152001: 2100
+				},
 				noInterrupt: [4],
-				noRetry: true
+				//noRetry: true
 			},
-			2: { noRetry: true },
-			3: {
+			2: {
+				triggerAbnormal: {
+					10152000: 2100,
+					10152001: 2100
+				},
+				noInterrupt: [4],
+				//noRetry: true
+			},
+			3: { // May need to set to false due to the client believing it can cast it when the skill has gone in CD already
 				length: 1195,
 				distance: -198.53
 			},
@@ -3692,15 +3714,33 @@ module.exports = {
 				length: 1195,
 				distance: -198.53
 			},
-			30: { noRetry: true }
+			30: {
+				noInterrupt: ['4-30'],
+				triggerAbnormal: {
+					10152000: 2100,
+					10152001: 2100
+				},
+				//noRetry: true
+			}
 		},
 		5: { // Burst Fire
 			'*': {
 				blockCancelPacket: true,
+				noRetry: true,
+				chains: {
+					'5-0': 1
+				}
+			},
+			0: {
+				triggerAbnormal: { 10152053: 2100 }, //
+				length: 855,
 				noInterrupt: ['9-0']
 			},
-			0: { length: 855 },
 			1: {
+				triggerAbnormal: {
+					10152050: 1200, //
+					10152054: 1200 //
+				},
 				fixedSpeed: 1,
 				length: 122,
 				stamina: 70,
@@ -3718,28 +3758,43 @@ module.exports = {
 		},
 		6: { // Time Bomb
 			'*': {
+				triggerAbnormal: { 10152010: 3100 },
 				fixedSpeed: 1,
-				length: 1010
+				length: 1000,
+				projectiles: [20]
 			},
 			1: true,
-			2: true
+			2: true,
+			20: {
+				type: 'userProjectile',
+				flyingSpeed: 800
+			}
 		},
 		7: { // Arcane Barrage
 			'*': {
-				length: 1525
+				length: 1525,
 			},
 			1: {
+				triggerAbnormal: {
+					10152010: 3100,
+					//10152040: 3100
+				},
 				fixedSpeed: 1,
 				noInterrupt: [7],
 				noRetry: true
 			},
 			2: {
+				triggerAbnormal: {
+					10152010: 3100,
+					//10152040: 3100
+				},
 				fixedSpeed: 1,
 				noInterrupt: [7],
 				noRetry: true
 			},
 			3: {
-				requiredBuff: 10152040,
+				//triggerAbnormal: { 10152081: 4100 }, // Not sure what this does
+				consumeAbnormal: [10152040, 10152081], // Switched since the client might know how to act actually
 				length: 1200
 			}
 		},
@@ -3751,17 +3806,53 @@ module.exports = {
 				noRetry: true
 			},
 			0: {
+				triggerAbnormal: { 10152085: 4100 },
 				type: 'charging',
 				autoRelease: 0
 			},
-			10: { distance: -50 },
-			11: { distance: -100 }
+			10: {
+				triggerAbnormal: { 10152085: 4100 },
+				distance: -50,
+				projectiles: [21, 22]
+			},
+			11: {
+				triggerAbnormal: { 10152085: 4100 },
+				distance: -100,
+				projectiles: [21, 22, 23, 24, 25]
+			},
+			21: {
+				type: 'userProjectile',
+				flyingSpeed: 600,
+				flyingDistance: 750
+			},
+			22: {
+				type: 'userProjectile',
+				flyingSpeed: 500,
+				flyingDistance: 750
+			},
+			23: {
+				type: 'userProjectile',
+				flyingSpeed: 400,
+				flyingDistance: 750
+			},
+			24: {
+				type: 'userProjectile',
+				flyingSpeed: 350,
+				flyingDistance: 750
+			},
+			25: {
+				type: 'userProjectile',
+				flyingSpeed: 300,
+				flyingDistance: 750
+			}
 		},
 		10: { // Arc Bomb
 			'*': {
+				triggerAbnormal: { 10152086: 4100 },
 				blockCancelPacket: true,
 				length: 1325,
 				noInterrupt: [10, 20],
+				projectiles: [20],
 				chains: {
 					'2-1': null,
 					3: null,
@@ -3780,10 +3871,36 @@ module.exports = {
 			},
 			1: true,
 			2: true,
+			20: {
+				type: 'userProjectile',
+				flyingSpeed: 700,
+				flyingDistance: 350
+			},
+			// TODO: Chain projectiles
+			/*21: {
+				type: 'userProjectile',
+				flyingSpeed: 300,
+				flyingDistance: 100
+			},
+			22: {
+				type: 'userProjectile',
+				flyingSpeed: 300,
+				flyingDistance: 75
+			},
+			23: {
+				type: 'userProjectile',
+				flyingSpeed: 300,
+				flyingDistance: 50
+			},
+			24: {
+				type: 'projectile',
+				length: 1000
+			},*/
 			30: true
 		},
 		11: { // Rocket Jump
 			'*': {
+				triggerAbnormal: { 10153093: 2147483647 },
 				length: 1400,
 				noInterrupt: [3, 11, 15, 20],
 				distance: 415.45,
@@ -3819,7 +3936,7 @@ module.exports = {
 			'*': {
 				length: 5800,
 				distance: -269.09,
-				noInterrupt: [13],
+				//noInterrupt: [13],
 				chains: {
 					'2-1': 30,
 					3: 30,
@@ -3842,7 +3959,8 @@ module.exports = {
 		},
 		15: { // Replenishment
 			'*': {
-				fixedSpeed: 1,
+				triggerAbnormal: { 10152072: 4100 },
+				fixedSpeed: 1, // The server sends 30090 500 when using the +50 will glyph
 				length: 1325,
 				noInterrupt: [15, 20],
 				chains: {
@@ -3865,7 +3983,7 @@ module.exports = {
 			30: true
 		},
 		18: { // HB
-			'*': {
+			'*': {// 10152251 2147483647
 				fixedSpeed: 1,
 				length: 1430,
 				noInterrupt: [18]
@@ -3876,6 +3994,7 @@ module.exports = {
 		19: { // ST
 			'*': {
 				length: 1325,
+				projectiles: [20],
 				chains: {
 					'2-1': null,
 					3: null,
@@ -3894,6 +4013,16 @@ module.exports = {
 			},
 			1: true,
 			2: true,
+			20: {
+				type: 'userProjectile',
+				flyingSpeed: 700,
+				flyingDistance: 450
+			},
+			// TODO: Chain projectiles
+			/*21: {
+				type: 'projectile',
+				length: 5000
+			},*/
 			30: true
 		},
 		20: { // Retaliate
@@ -3905,6 +4034,10 @@ module.exports = {
 		},
 		40: { // Rolling Reload
 			0: {
+				triggerAbnormal: {
+					10152010: 3100,
+					10152012: 3100 // More? Less?, 1 abnormal is enough? Do all need to be blocked??
+				},
 				fixedSpeed: 1,
 				length: 935,
 				noInterrupt: [11],

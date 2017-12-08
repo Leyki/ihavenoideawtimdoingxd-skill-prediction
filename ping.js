@@ -60,7 +60,6 @@ class Ping {
 		})
 	}
 }
-
 class ExternalPingBridge {
 	constructor(dispatch) {
 		this.spawnProcess = require('child_process').spawn
