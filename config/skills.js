@@ -232,8 +232,8 @@ module.exports = {
 				distance: 120.28,
 				noInterrupt: [32],
 				race: {
-					2: { distance: 120.28 }, // M.Helf: 120.277
-					5: { distance: 120.28 }, // F.Aman: 120.277
+					//2: { distance: 120.28 }, // M.Helf: 120.277
+					//5: { distance: 120.28 }, // F.Aman: 120.277
 					7: { length: 1080 },
 					8: { distance: 128.89 }, // Popori: 128.889
 					9: { distance: 138.28 } // Elin: 138.284
@@ -1968,15 +1968,14 @@ module.exports = {
 				length: 1285,
 				race: {
 					9: { length: 1015 } // Elin
-				}
+				},
+				noRetry: true
 			},
 			0: {
 				type: 'charging',
 				length: [1000, 1000],
 				noInterrupt: [7, 26],
-				autorelease: 200,
-				dcType:'movingCharge',
-                noRetry:true,
+				autorelease: 0,
 				abnormals: {
 					25140: { chargeSpeed: 0.3 }
 				}
@@ -2100,13 +2099,14 @@ module.exports = {
 			}
 		},
 		19: { // Mana Siphon
-			'*': { length: 900 },
+			'*': {
+				length: 900,
+				noRetry: true
+			},
 			0: {
 				type: 'charging',
 				length: [1000, 1000],
-				noInterrupt: [7, 26],
-				noRetry:true,
-				dcType:'movingCharge'
+				noInterrupt: [7, 26]
 			},
 			10: { noInterrupt: [7, 26] },
 			11: { noInterrupt: [7, 26] },
@@ -2117,8 +2117,7 @@ module.exports = {
 			0: {
 				type: 'lockon',
 				fixedSpeed: 1,
-				length: 4900,
-				dcType:'movingSkill'
+				length: 4900
 			},
 			10: {
 				type: 'lockonCast',
@@ -2133,9 +2132,7 @@ module.exports = {
 			}
 		},
 		21: { // Nerve Exhaustion
-			'*': { noRetry: true,
-					dcType:'movingSkill'
-			},
+			'*': { noRetry: true },
 			0: {
 				type: 'lockon',
 				fixedSpeed: 1,
@@ -2148,9 +2145,7 @@ module.exports = {
 			}
 		},
 		22: { // Burning Breath
-			'*': { noRetry: true,
-				dcType:'movingSkill'
-			 },
+			'*': { noRetry: true },
 			0: {
 				type: 'lockon',
 				fixedSpeed: 1,
@@ -2163,9 +2158,7 @@ module.exports = {
 			}
 		},
 		23: { // Mana Volley
-			'*': { noRetry: true,
-				dcType:'movingSkill'
-			 },
+			'*': { noRetry: true },
 			0: {
 				type: 'lockon',
 				fixedSpeed: 1,
@@ -2178,9 +2171,7 @@ module.exports = {
 			}
 		},
 		25: { // Time Gyre
-			'*': { noRetry: true,
-				dcType:'movingSkill'
-			},
+			'*': { noRetry: true },
 			0: {
 				type: 'lockon',
 				fixedSpeed: 1,
@@ -2200,7 +2191,6 @@ module.exports = {
 				noInterrupt: [26],
 				teleportStage: 1,
 				noRetry: true,
-				dcType:'shortTel',
 				abnormals: {
 					400800: { chain: 6 },
 					400801: { chain: 6 },
@@ -2289,17 +2279,17 @@ module.exports = {
 		},
 		3: { // Radiant Arrow
 			'*': {
-				length: 1770,
+				length: 1760,
 				races: {
 					1: { length: 1600 }	// F.Human
-				}
+				},
+				noRetry: true
 			},
 			0: {
 				type: 'charging',
-				length: [590, 590, 590],
+				length: [600, 600, 600],
 				noInterrupt: [4, 22],
-				autoRelease: 2550,
-                noRetry:true,
+				//autoRelease: 2550,
 				abnormals: {
 					26180: { chargeSpeed: 0.3 },
 					601450: { chargeSpeed: 0.5 }
@@ -2341,17 +2331,17 @@ module.exports = {
 		},
 		4: { // Penetrating Arrow
 			'*': {
-				length: 1320,
+				length: 1315,
 				races: {
 					1: { length: 1275 }	// F.Human, inb4 racechange
-				}
+				},
+				noRetry: true
 			},
 			0: {
 				type: 'charging',
-				length: [780, 780, 780],
+				length: [800, 800, 800],
 				noInterrupt: [3, 22],
-                noRetry:true,
-				autoRelease: 2550,
+				//autoRelease: 2550,
 				abnormals: {
 					26160: { chargeSpeed: 0.3 },
 					26170: { chargeSpeed: 0.3 },
@@ -2400,7 +2390,7 @@ module.exports = {
 		},
 		5: { // Rain of Arrows
 			0: {
-				length: 3160,
+				length: 3170,
 				glyphs: {
 					26077: { speed: 1.4 }
 				},
@@ -2414,7 +2404,7 @@ module.exports = {
 		},
 		6: { // Backstep
 			0: {
-				length: 650,
+				length: 670,
 				distance: -200,
 				forceClip: true,
 				abnormals: {
@@ -2450,13 +2440,13 @@ module.exports = {
 			3: { length: 800 },
 			4: { length: 700 },
 			5: { length: 800 },
-			6: { length: 1220 } // 1240
+			6: { length: 1233 } // 1240
 		},
 		9: { // Slow Trap
-			0: { length: 1170 }
+			0: { length: 1150 }
 		},
 		10: { // Stunning Trap
-			0: { length: 1170 }
+			0: { length: 1150 }
 		},
 		12: { // Velik's Mark
 			0: { length: 200 }
@@ -2500,7 +2490,7 @@ module.exports = {
 		},
 		19: { // Poison Arrow
 			0: {
-				length: 1115,
+				length: 1125,
 				distance: -12.5,
 				noInterrupt: [22],
 				race: {
@@ -2564,7 +2554,7 @@ module.exports = {
 			0: {
 				type: 'dash',
 				fixedSpeed: 1,
-				length: 1050, // 950-1025
+				length: 1075, // 1000
 				distance: 413, // 412.078
 				noInterrupt: [33],
 				abnormals: {
@@ -2597,10 +2587,10 @@ module.exports = {
 			}
 		},
 		3: { // Healing Circle
-			0: { length: 1760 }
+			0: { length: 1750 }
 		},
 		5: { // Blessing of Shakan
-			0: { length: 1290 }
+			0: { length: 1300 }
 		},
 		6: { // Arise
 			0: { length: 830 }
@@ -2614,14 +2604,14 @@ module.exports = {
 			}
 		},
 		10: { // Purifying Circle
-			0: { length: 1270 }
+			0: { length: 1275 }
 		},
 		11: { // Metamorphic Blast
 			0: { length: 830 }
 		},
 		12: { // Resurrect
 			0: {
-				length: 5900,
+				length: 5915,
 				glyphs: {
 					28045: { speed: 1.15 }
 				},
@@ -2648,7 +2638,7 @@ module.exports = {
 			}
 		},
 		18: { // Heal Thyself
-			0: { length: 1260 }
+			0: { length: 1250 }
 		},
 		19: { // Focus Heal
 			'*': { noRetry: true },
@@ -2666,11 +2656,11 @@ module.exports = {
 			0: { length: 650 }
 		},
 		23: { // Blessing of Balder
-			0: { length: 1290 }
+			0: { length: 1300 }
 		},
 		26: { // Fiery Escape
 			0: {
-				length: 1105,
+				length: 1125,
 				distance: -250.5,
 				abnormals: {
 					7692002: { chain: 6 },
@@ -2693,13 +2683,15 @@ module.exports = {
 			30: { length: 1040 }
 		},
 		28: { // Mana Charge
-			'*': { length: 835 },
+			'*': {
+				length: 825,
+				noRetry: true
+			},
 			0: {
 				type: 'charging',
 				length: [800, 1600],
 				noInterrupt: [26, 27, 38],
 				autoRelease: 3200,
-                noRetry:true,
 				glyphs: {
 					28031: { chargeSpeed: 0.25 }
 				}
@@ -2711,7 +2703,7 @@ module.exports = {
 		29: { // Triple Nemesis
 			0: { length: 800 },
 			1: { length: 800 },
-			2: { length: 1245 }
+			2: { length: 1250 }
 		},
 		30: { // Plague of Exhaustion
 			'*': { noRetry: true },
@@ -2753,7 +2745,7 @@ module.exports = {
 			}
 		},
 		34: { // Restorative Burst
-			0: { length: 1420 }
+			0: { length: 1430 }
 		},
 		35: { // Energy Stars
 			'*': { noRetry: true },
@@ -2786,7 +2778,7 @@ module.exports = {
 		},
 		38: { // Backstep
 			0: {
-				length: 650,
+				length: 665,
 				distance: -200,
 				forceClip: true,
 				abnormals: {
@@ -2883,7 +2875,7 @@ module.exports = {
 		},
 		10: { // Resurrect
 			0: {
-				length: 8050, // 8050, 8060 //
+				length: 8070, // 8050, 8060 //
 				glyphs: {
 					27049: { speed: 1.2 },
 					27079: { speed: 1.2 }
@@ -2913,22 +2905,22 @@ module.exports = {
 			}
 		},
 		13: { // Aura of the Merciless
-			'*': { length: 1290 }, //
+			'*': { length: 1300 }, //
 			0: true,
 			50: true
 		},
 		14: { // Aura of the Swift
-			'*': { length: 1290 },
+			'*': { length: 1300 },
 			0: true,
 			50: true
 		},
 		15: { // Aura of the Unyielding
-			'*': { length: 1290 },
+			'*': { length: 1300 },
 			0: true,
 			50: true
 		},
 		16: { // Aura of the Tenacious
-			'*': { length: 1290 },
+			'*': { length: 1300 },
 			0: true,
 			50: true
 		},
@@ -2953,12 +2945,15 @@ module.exports = {
 			}
 		},
 		18: { // Arun's Vitae
-			'*': { noInterrupt: [8, 17, 23] },
+			'*': {
+				noInterrupt: [8, 17, 23],
+				noRetry: true
+			},
 			0: {
 				type: 'charging',
-                chargeLevels: [10, 10],
 				length: 1475,
-				//autoRelease: 0
+				chargeLevels: [10, 10],
+				autoRelease: 0
 			},
 			10: {
 				length: 850,
@@ -2976,12 +2971,15 @@ module.exports = {
 			}
 		},
 		22: { // Arun's Tears
-			'*': { noInterrupt: [8, 17, 23] },
+			'*': {
+				noInterrupt: [8, 17, 23],
+				noRetry: true
+			},
 			0: {
 				type: 'charging',
 				length: 1475,
-                chargeLevels: [10, 10],
-				//autoRelease: 0
+				chargeLevels: [10, 10],
+				autoRelease: 0
 			},
 			10: {
 				length: 850, // 810 female high elf
@@ -3263,7 +3261,7 @@ module.exports = {
 				chains: {
 					1: null,
 					3: null,
-					4: null,
+					//4: null,
 					5: null,
 					6: null,
 					8: null,
@@ -3310,7 +3308,7 @@ module.exports = {
 		},
 		5: { // Grim Strike
 			'*': {
-				blockCancelPacket:true,
+				blockCancelPacket: true,
 				distance: [120, 0],
 				inPlace: {
 					movement: [
@@ -3336,7 +3334,7 @@ module.exports = {
 				chains: {
 					1: 30,
 					3: 30,
-					5: 30,
+					//5: 30,
 					6: 30,
 					8: 30,
 					9: 30,
@@ -3514,6 +3512,12 @@ module.exports = {
 				}
 			}
 		},
+		/*20: { // Cable Step
+			0: {
+				type: 'dynamicDistance',
+				length: 1250
+			}
+		},*/
 		40: { // Shadow Step
 			'*': {
 				length: 700,
@@ -3536,27 +3540,34 @@ module.exports = {
 		}
 	},
 	9: { // Gunner
+		'*': { consumeAbnormal: [10152000, 10152001, 10152010, 10152011, 10152050, 10152053, 10152054, 10152072, 10152082, 10152083, 10152085, 10152086, 10153093] },
 		1: { // Blast
 			'*': {
+				triggerAbnormal: { 10152011: 3100 },
 				fixedSpeed: 1,
 				noRetry: true,
 				length: 1195,
 				noInterrupt: [1],
-				dcType: 'shootingmovingskill'
+				projectiles: [20]
 			},
 			1: true,
-			2: true
+			2: true,
+			20: {
+				type: 'userProjectile',
+				flyingSpeed: 800,
+				flyingDistance: 500
+			}
 		},
 		2: { // Bombardment
 			'*': { noRetry: true },
 			0: {
 				type: 'lockon',
 				fixedSpeed: 1,
-				length: 59900,
-				dcType:'movingSkill'
+				length: 59900
 			},
 			1: {
 				type: 'lockonCast',
+				triggerAbnormal: { 10152082: 4100 },
 				length: 3000,
 				glyphs: {
 					30004: { speed: 1.25 }
@@ -3565,11 +3576,12 @@ module.exports = {
 		},
 		3: { // Scattershot
 			'*': {
+				triggerAbnormal: { 10152083: 4100 },
 				length: 1725,
 				distance: -108,
 				noInterrupt: [3, 20],
 				glyphs: {
-					30007: {
+					30007: { // The server also sends 30030 when active
 						movement: [
 							{
 								duration: 394,
@@ -3614,12 +3626,13 @@ module.exports = {
 			'*': {
 				length: 1525,
 				distance: 137.88,
-				noInterrupt: ['4-3', '4-4', 20],
+				noInterrupt: [20],
 				chains: {
 					'2-1': 30,
 					3: 30,
-					4: 4,
-					'7-3': 30,
+					'4-1': 4,
+					'4-2': 4,
+					'4-30': 4,
 					'9-10': 30,
 					'9-11': 30,
 					10: 30,
@@ -3631,11 +3644,22 @@ module.exports = {
 				}
 			},
 			1: {
+				triggerAbnormal: {
+					10152000: 2100,
+					10152001: 2100
+				},
 				noInterrupt: [4],
-				noRetry: true
+				//noRetry: true
 			},
-			2: { noRetry: true },
-			3: {
+			2: {
+				triggerAbnormal: {
+					10152000: 2100,
+					10152001: 2100
+				},
+				noInterrupt: [4],
+				//noRetry: true
+			},
+			3: { // May need to set to false due to the client believing it can cast it when the skill has gone in CD already
 				length: 1195,
 				distance: -198.53
 			},
@@ -3643,15 +3667,33 @@ module.exports = {
 				length: 1195,
 				distance: -198.53
 			},
-			30: { noRetry: true }
+			30: {
+				noInterrupt: ['4-30'],
+				triggerAbnormal: {
+					10152000: 2100,
+					10152001: 2100
+				},
+				//noRetry: true
+			}
 		},
 		5: { // Burst Fire
-			'*':{
+			'*': {
 				blockCancelPacket: true,
+				noRetry: true,
+				chains: {
+					'5-0': 1
+				}
+			},
+			0: {
+				triggerAbnormal: { 10152053: 2100 }, //
+				length: 855,
 				noInterrupt: ['9-0']
 			},
-			0: { length: 855 },
 			1: {
+				triggerAbnormal: {
+					10152050: 1200, //
+					10152054: 1200 //
+				},
 				fixedSpeed: 1,
 				length: 122,
 				stamina: 70,
@@ -3669,52 +3711,101 @@ module.exports = {
 		},
 		6: { // Time Bomb
 			'*': {
+				triggerAbnormal: { 10152010: 3100 },
 				fixedSpeed: 1,
-				length: 1010,
-				dcType: 'shootingmovingskill'
+				length: 1000,
+				projectiles: [20]
 			},
 			1: true,
-			2: true
+			2: true,
+			20: {
+				type: 'userProjectile',
+				flyingSpeed: 800
+			}
 		},
 		7: { // Arcane Barrage
-			'*': { length: 1525 },
+			'*': {
+				length: 1525,
+			},
 			1: {
+				triggerAbnormal: {
+					10152010: 3100,
+					//10152040: 3100
+				},
 				fixedSpeed: 1,
 				noInterrupt: [7],
-				noRetry: true,
-				dcType: 'shootingmovingskill'
+				noRetry: true
 			},
 			2: {
+				triggerAbnormal: {
+					10152010: 3100,
+					//10152040: 3100
+				},
 				fixedSpeed: 1,
 				noInterrupt: [7],
-				noRetry: true,
-				dcType: 'shootingmovingskill'
+				noRetry: true
 			},
 			3: {
-				requiredBuff: 10152040,
+				//triggerAbnormal: { 10152081: 4100 }, // Not sure what this does
+				consumeAbnormal: [10152040, 10152081], // Switched since the client might know how to act actually
 				length: 1200
 			}
 		},
 		9: { // Mana Missiles
-			'*': { 
-				//blockCancelPacket: true,
-				length: 1240,
-				noInterrupt: [20] 
+			'*': {
+				blockCancelPacket: true,
+				length: 1250,
+				noInterrupt: [20],
+				noRetry: true
 			},
 			0: {
+				triggerAbnormal: { 10152085: 4100 },
 				type: 'charging',
-				autoRelease: 0,
-				noRetry:true,
-				dcType: 'movingCharge'
+				autoRelease: 0
 			},
-			10: { distance: -50 },
-			11: { distance: -100 }
+			10: {
+				triggerAbnormal: { 10152085: 4100 },
+				distance: -50,
+				projectiles: [21, 22]
+			},
+			11: {
+				triggerAbnormal: { 10152085: 4100 },
+				distance: -100,
+				projectiles: [21, 22, 23, 24, 25]
+			},
+			21: {
+				type: 'userProjectile',
+				flyingSpeed: 600,
+				flyingDistance: 750
+			},
+			22: {
+				type: 'userProjectile',
+				flyingSpeed: 500,
+				flyingDistance: 750
+			},
+			23: {
+				type: 'userProjectile',
+				flyingSpeed: 400,
+				flyingDistance: 750
+			},
+			24: {
+				type: 'userProjectile',
+				flyingSpeed: 350,
+				flyingDistance: 750
+			},
+			25: {
+				type: 'userProjectile',
+				flyingSpeed: 300,
+				flyingDistance: 750
+			}
 		},
 		10: { // Arc Bomb
 			'*': {
+				triggerAbnormal: { 10152086: 4100 },
 				blockCancelPacket: true,
 				length: 1325,
-				noInterrupt: [20],
+				noInterrupt: [10, 20],
+				projectiles: [20],
 				chains: {
 					'2-1': null,
 					3: null,
@@ -3722,7 +3813,7 @@ module.exports = {
 					'7-3': null,
 					'9-10': null,
 					'9-11': null,
-					10: null,
+					//10: null,
 					11: null,
 					13: null,
 					15: null,
@@ -3733,10 +3824,36 @@ module.exports = {
 			},
 			1: true,
 			2: true,
+			20: {
+				type: 'userProjectile',
+				flyingSpeed: 700,
+				flyingDistance: 350
+			},
+			// TODO: Chain projectiles
+			/*21: {
+				type: 'userProjectile',
+				flyingSpeed: 300,
+				flyingDistance: 100
+			},
+			22: {
+				type: 'userProjectile',
+				flyingSpeed: 300,
+				flyingDistance: 75
+			},
+			23: {
+				type: 'userProjectile',
+				flyingSpeed: 300,
+				flyingDistance: 50
+			},
+			24: {
+				type: 'projectile',
+				length: 1000
+			},*/
 			30: true
 		},
 		11: { // Rocket Jump
 			'*': {
+				triggerAbnormal: { 10153093: 2147483647 },
 				length: 1400,
 				noInterrupt: [3, 11, 15, 20],
 				distance: 415.45,
@@ -3748,11 +3865,11 @@ module.exports = {
 					'9-10': 30,
 					'9-11': 30,
 					10: 30,
-					11: 30,
+					//11: 30,
 					13: 30,
 					19: 30,
 					40: 31
-				}				
+				}
 			},
 			1: true,
 			2: true,
@@ -3782,7 +3899,7 @@ module.exports = {
 					'9-11': 30,
 					10: 30,
 					11: 30,
-					13: 30,
+					//13: 30,
 					15: 30,
 					19: 30,
 					40: 30
@@ -3795,7 +3912,8 @@ module.exports = {
 		},
 		15: { // Replenishment
 			'*': {
-				fixedSpeed: 1,
+				triggerAbnormal: { 10152072: 4100 },
+				fixedSpeed: 1, // The server sends 30090 500 when using the +50 will glyph
 				length: 1325,
 				noInterrupt: [15, 20],
 				chains: {
@@ -3808,7 +3926,7 @@ module.exports = {
 					10: 30,
 					11: 30,
 					13: 30,
-					15: 30,
+					//15: 30,
 					19: 30,
 					40: 30
 				}
@@ -3818,17 +3936,18 @@ module.exports = {
 			30: true
 		},
 		18: { // HB
-			'*': {
+			'*': {// 10152251 2147483647
 				fixedSpeed: 1,
 				length: 1430,
-				dcType: 'shootingmovingskill'
+				noInterrupt: [18]
 			},
 			1: true,
 			2: true
 		},
 		19: { // ST
 			'*': {
-				length: 1325, 
+				length: 1325,
+				projectiles: [20],
 				chains: {
 					'2-1': null,
 					3: null,
@@ -3840,13 +3959,23 @@ module.exports = {
 					11: null,
 					13: null,
 					15: null,
-					19: null,
+					//19: null,
 					40: null
 				},
 				noRetry: true
 			},
 			1: true,
 			2: true,
+			20: {
+				type: 'userProjectile',
+				flyingSpeed: 700,
+				flyingDistance: 450
+			},
+			// TODO: Chain projectiles
+			/*21: {
+				type: 'projectile',
+				length: 5000
+			},*/
 			30: true
 		},
 		20: { // Retaliate
@@ -3858,6 +3987,10 @@ module.exports = {
 		},
 		40: { // Rolling Reload
 			0: {
+				triggerAbnormal: {
+					10152010: 3100,
+					10152012: 3100 // More? Less?, 1 abnormal is enough? Do all need to be blocked??
+				},
 				fixedSpeed: 1,
 				length: 935,
 				noInterrupt: [11],
@@ -4360,7 +4493,27 @@ module.exports = {
 		3: { // Leaves on the Wind
 			'*': {
 				length: 1275,
-				noInterrupt: [3]
+				noInterrupt: [3, '4-10'],
+				chains: {
+					1: null,
+					2: 30,
+					'4-10': 'borked',
+					5: 30,
+					6: null,
+					7: null,
+					8: 30, // reeeeeeeeee
+					9: null,
+					10: null,
+					12: null,
+					13: null, // eeeeeeeeeeee
+					14: null,
+					15: null,
+					16: null,
+					17: 30,
+					18: null,
+					19: null,
+					20: null
+				}
 			},
 			0: true,
 			30: true
@@ -4670,27 +4823,27 @@ module.exports = {
 			'*': {
 				fixedSpeed: 1,
 				length: 1525,
-				noInterrupt: [16],
+				noInterrupt: ['4-10', 16],
 				chains: {
-					1: 30,
+					1: null,
 					2: 30,
-					3: 30,
-					'4-10': 30,
+					3: null,
+					'4-10': 'borked',
 					5: 30,
-					6: 30,
-					7: 30,
-					8: 30,
-					9: 30,
-					10: 30,
-					12: 30,
-					13: 30,
-					14: 30,
-					15: 30,
+					6: null,
+					7: null,
+					8: 30, // reeeeeeeeee
+					9: null,
+					10: null,
+					12: null,
+					13: null, // eeeeeeeeeeee
+					14: null,
+					15: null,
 					17: 30,
-					18: 30,
-					19: 30,
-					20: 30
-				},
+					18: null,
+					19: null,
+					20: null
+				}
 			},
 			0: true,
 			30: true
@@ -4724,7 +4877,27 @@ module.exports = {
 			'*': {
 				length: 1000,
 				distance: 68.535,
-				noInterrupt: [18]
+				noInterrupt: ['4-10', 18],
+				chains: {
+					1: null,
+					2: 30,
+					3: null,
+					'4-10': 'borked',
+					5: 30,
+					6: null,
+					7: null,
+					8: 30, // reeeeeeeeee
+					9: null,
+					10: null,
+					12: null,
+					13: null, // eeeeeeeeeeee
+					14: null,
+					15: null,
+					16: null,
+					17: 30,
+					19: null,
+					20: null
+				}
 			},
 			0: true,
 			30: true
@@ -5212,7 +5385,7 @@ module.exports = {
 					11: 30,
 					12: 30,
 					13: 30,
-					15: 30,
+					14: 30,
 					16: 30,
 					19: 30,
 					20: 30
@@ -5282,7 +5455,8 @@ module.exports = {
 					14: 30,
 					15: 30,
 					16: 30,
-					19: 30, // :thinking:
+					18: 30,
+					//19: 30,
 					20: 30
 				}
 			},

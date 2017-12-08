@@ -66,8 +66,8 @@ module.exports = function SkillPrediction(dispatch) {
         stageEndTime = 0,
         stageEndTimeout = null,
         debugActionTime = 0,
-        packetsHooks = [],
-        zFix = 0
+        packetsHooks = []
+
 
 
     LoadConfiguration()
@@ -122,7 +122,7 @@ module.exports = function SkillPrediction(dispatch) {
         addHook('C_CANCEL_SKILL', 1, cCancelSkillHandler)
         addHook('S_ACTION_STAGE', 1, sActionStageHandler)
         abnormality.enabled = true
-
+        abnormality.DEBUG = config.debug_abnormals
     }
 
     function disable() {
@@ -132,7 +132,7 @@ module.exports = function SkillPrediction(dispatch) {
         }
         packetsHooks = []
         abnormality.enabled = false
-
+        abnormality.DEBUG = false
     }
 
     function addHook(packetName, packetVersion, func) {
@@ -174,6 +174,15 @@ module.exports = function SkillPrediction(dispatch) {
                     command.message('[Skill Prediction] Location debug activated')
 
                 config.debug_loc = !config.debug_loc
+                break
+            case 'debugabnorm':
+                if (config.debug_abnormals)
+                    command.message('[Skill Prediction] Abnormals debug deactivated')
+                else
+                    command.message('[Skill Prediction] Abnormals debug activated')
+
+                config.debug_abnormals = !config.debug_abnormals
+                abnormality.DEBUG = config.debug_abnormals
                 break
             case 'strictdef':
                 if (inCombat) {
@@ -1323,7 +1332,7 @@ module.exports = function SkillPrediction(dispatch) {
             source: myChar(),
             x: currentLocation.x,
             y: currentLocation.y,
-            z: currentLocation.z + zFix,
+            z: currentLocation.z,
             w: currentLocation.w,
             model,
             skill: currentAction.skill,
@@ -1350,7 +1359,7 @@ module.exports = function SkillPrediction(dispatch) {
         if (actionNumber > 0xffffffff) actionNumber = 0x80000000
 
         oopsLocation = currentAction = null
-        zFix = 0
+
     }
 
     function sendCannotStartSkill(skill) {

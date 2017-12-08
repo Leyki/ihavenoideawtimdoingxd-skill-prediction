@@ -18,3 +18,4 @@ Extended commands:
 Debug commands:  
     debug - switch for debug mode (output will be in console)
     debugloc - switch for location debug mode (output will be in console)
+    debugabnorm - switch for abnormals debug mode (output will be in console)
