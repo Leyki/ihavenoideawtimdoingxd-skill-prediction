@@ -24,8 +24,8 @@ if(CHECK_COMPATABILITY){
 
 const sysmsg = require('tera-data-parser').sysmsg,
 	MODS = [
-		require('./skills'),
-		require('./cooldowns')
+		require('./lib/core'),
+		require('./lib/cooldowns')
 	]
 
 module.exports = function SkillPredictionCore(dispatch) {
