@@ -1420,32 +1420,32 @@ module.exports = function SkillPrediction(dispatch) {
     }
 
     // Modifies the chain part (last 2 digits) of a skill ID, preserving flags
-    function modifyChain(id, chain) {
-        return id - ((id & 0xffffff) % 100) + chain
-    }
+	function modifyChain(id, chain) {
+		return id - ((id & 0x3ffffff) % 100) + chain
+	}
 
-    function skillId(id, flagAs) {
-        id |= flagAs
+	function skillId(id, flagAs) {
+		id |= flagAs
 
-        let skillFlags = ['[?1]', '[?2]', 'P', 'C', '[?5]', '[?6]', '[?7]', '[?8]'],
-            flags = ''
+		let skillFlags = ['P', 'C', '[?3]', '[?4]', '[?5]', '[?6]'],
+			flags = ''
 
-        for (let i = 0, x = id >>> 24; x; i++, x >>>= 1)
-            if (x & 1) flags += skillFlags[i]
+		for(let i = 0, x = id >>> 26; x; i++, x >>>= 1)
+			if(x & 1) flags += skillFlags[i]
 
-        id = (id & 0xffffff).toString()
+		id = (id & 0x3ffffff).toString()
 
-        switch (flags) {
-            case 'P':
-                id = [id.slice(0, -4), id.slice(-4, -2), id.slice(-2)].join('-')
-                break
-            case 'C':
-                id = [id.slice(0, -2), id.slice(-2)].join('-')
-                break
-        }
+		switch(flags) {
+			case 'P':
+				id = [id.slice(0, -4), id.slice(-4, -2), id.slice(-2)].join('-')
+				break
+			case 'C':
+				id = [id.slice(0, -2), id.slice(-2)].join('-')
+				break
+		}
 
-        return flags + id
-    }
+		return flags + id
+	}
 
     //Load info about skill
     function skillInfo(id, local) {
