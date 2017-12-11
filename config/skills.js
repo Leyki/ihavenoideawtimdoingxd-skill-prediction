@@ -1422,7 +1422,8 @@ module.exports = {
 					8: { distance: 69.51 }, // Popori: 69.513
 					9: { distance: 87.27 }, // Elin: 87.272
 					10: { distance: 64.88 } // Baraka: 64.884
-				}
+				},
+				canVB: true
 			}
 		},
 		4: { // Flatten
@@ -1582,7 +1583,8 @@ module.exports = {
 				noInterrupt: [2, 4, 15, 24, 25, 30],
 				races: {
 					3: { length: [375, 375, 375, 375, 1800] }	// F.Helf
-				}
+				},
+				canVB: true
 			}
 		},
 		11: { // Leaping Strike 
@@ -1612,12 +1614,12 @@ module.exports = {
 				noRetry: true
 			}
 		},
-		/*15: { // Vampiric Blow  //         Uncomment this for being able to VB if, a VB chain is avaiable, else, it won't work
+		15: { // Vampiric Blow  //         Uncomment this for being able to VB if, a VB chain is avaiable, else, it won't work
             '*': { length: 1930 },            // Usage:            1. "Show default Chained Skills" in the Chained Skills menu must be on.        		                               
             0: {                             //                    2. Must be in combat when used.  
                 type: 'charging',           //                    Else the animation of VB won't go off causing slight desync.
 				length: [800, 800, 800],
-				noInterrupt: [2, '3-0', 4, '10-0', '18-0', 24, 25, 30], // VB can't chain from stages 10, 11 or 12 in the client, it only can on stages 13
+				noInterrupt: [2, '3-0', 4, '10-0', '15-14', '18-0', 24, 25, 30], // VB can't chain from stages 10, 11 or 12 in the client, it only can on stages 13
 				//autorelease: 2515 // ish
 				abnormals: {
 					400500: { chargeSpeed: 0.2 },
@@ -1689,7 +1691,7 @@ module.exports = {
 					10: { distance: 64.88 } // Baraka: 64.884
 				}
 			}
-		},*/
+		},
 		16: { // Fearsome Shout
 			0: {
 				fixedSpeed: 1,
@@ -1757,7 +1759,8 @@ module.exports = {
 					8: { distance: 240.4 }, // Popori: 240.4
 					9: { distance: 167.62 }, // Elin: 167.624
 					10: { distance: 158.11 } // Baraka: 158.112
-				}
+				},
+				canVB: true
 			}
 		},
 		19: { // Tenacity
