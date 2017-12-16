@@ -1730,9 +1730,29 @@ module.exports = {
 				noInterrupt: [2]
 			}
 		},
-		18: { // Lethal Strike / Changed
+		18: { // Lethal Strike
 			'*': {
 				length: 1500,
+				noRetry: true
+			},
+			0: {
+				type: 'charging',
+				length: [800, 800, 800],
+				noInterrupt: [2, 3, 4, 10, 15, 24, 25, 30],
+				abnormals: {
+					24120: { chargeSpeed: 0.3 },
+					400500: { chargeSpeed: 0.2 },
+					400501: { chargeSpeed: 0.4 },
+					4010150: { chargeSpeed: 0.2 },
+					401400: { chain: 6 }
+				},
+				level: [
+					{ length: 800 },	// 1600
+					{ length: [800, 800] },	// 1600
+					{ length: [800, 800] }	// 1600
+				]
+			},
+			10: {
 				distance: 167.63, // 167.624
 				noInterrupt: [2, 4, 24, 25, 30],
 				race: {
@@ -1740,14 +1760,38 @@ module.exports = {
 					8: { distance: 240.4 }, // Popori: 240.4
 					9: { distance: 167.62 }, // Elin: 167.624
 					10: { distance: 158.11 } // Baraka: 158.112
-				},
-				chains: {
-					3: 30,
-					10: 30
 				}
 			},
-			0: true,
-			30: true
+			11: {
+				distance: 167.63, // 167.624
+				noInterrupt: [2, 4, 24, 25, 30],
+				race: {
+					6: { distance: 168.11 }, // M.Casta: 168.112
+					8: { distance: 240.4 }, // Popori: 240.4
+					9: { distance: 167.62 }, // Elin: 167.624
+					10: { distance: 158.11 } // Baraka: 158.112
+				}
+			},
+			12: {
+				distance: 167.63, // 167.624
+				noInterrupt: [2, 4, 24, 25, 30],
+				race: {
+					6: { distance: 168.11 }, // M.Casta: 168.112
+					8: { distance: 240.4 }, // Popori: 240.4
+					9: { distance: 167.62 }, // Elin: 167.624
+					10: { distance: 158.11 } // Baraka: 158.112
+				}
+			},
+			13: {
+				distance: 167.63, // 167.624
+				noInterrupt: [2, 4, 15, 24, 25, 30],
+				race: {
+					6: { distance: 168.11 }, // M.Casta: 168.112
+					8: { distance: 240.4 }, // Popori: 240.4
+					9: { distance: 167.62 }, // Elin: 167.624
+					10: { distance: 158.11 } // Baraka: 158.112
+				}
+			}
 		},
 		19: { // Fortitude
 			0: {
