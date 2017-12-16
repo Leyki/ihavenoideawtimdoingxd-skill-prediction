@@ -557,7 +557,7 @@ module.exports = {
 				}
 			}
 		},
-		3: { // Onslaught / Changed
+		3: { // Onslaught
 			'*': {
 				distance: [0, 100, 100, 100, 100, 35],
 				noInterrupt: [1, 2, 3, 4, 8, 9, 10, 11, 12, 13, 15, 18, 21, 23, 24, 25, 26, 27],
@@ -565,9 +565,7 @@ module.exports = {
 					22060: { speed: 1.25 }
 				},
 				chains: {
-					1: 30,
-					5: 30,
-					18: 30
+					5: 30
 				},
 				race: {
 					0: { distance: [0, 100, 100, 100, 100, 15] }, // M.Human
@@ -581,7 +579,7 @@ module.exports = {
 			0: { length: [950, 500, 500, 500, 400, 775] },
 			30: { length: [713, 375, 375, 375, 300, 582] }
 		},
-		4: { // Challenging Shout / Changed
+		4: { // Challenging Shout
 			0: {
 				length: 2215,
 				noInterrupt: [2],
@@ -589,10 +587,9 @@ module.exports = {
 					22056: { speed: 1.25 },
 					22085: { speed: 1.25 }
 				}
-			},
-			30: false
+			}
 		},
-		5: { // Shield Bash / Changed
+		5: { // Shield Bash
 			0: {
 				length: 830,
 				distance: 30,
@@ -605,8 +602,7 @@ module.exports = {
 					8: { distance: 30.000 }, // Popori*/
 					9: { distance: 43.69 } // Elin: 43.693
 				}
-			},
-			30: false
+			}
 		},
 		7: { // Guardian Shout
 			0: {
@@ -661,7 +657,7 @@ module.exports = {
 		11: { // Retaliate
 			0: {
 				type: 'retaliate',
-				length: 1635, // Is this correct?
+				length: 1645, // Is this correct?
 				noRetry: true,
 				noInterrupt: [2],
 				race: {
@@ -675,7 +671,7 @@ module.exports = {
 				noInterrupt: [2]
 			}
 		},
-		13: { // Spring Attack / Changed
+		13: { // Spring Attack
 			0: {
 				length: 2800,
 				distance: 85,
@@ -685,8 +681,7 @@ module.exports = {
 					5: 30,
 					8: 30,
 					10: 30,
-					18: 30,
-					24: 30
+					18: 30
 				}
 			},
 			30: {
@@ -765,22 +760,18 @@ module.exports = {
 				noInterrupt: [2]
 			}
 		},
-		/*20: { // Menacing Wave / Legacy skill *sad violin*
+		20: { // Menacing Wave
 			0: {
 				fixedSpeed: 1,
 				length: [700, 800], // 715, 815
 				noInterrupt: [2]
 			}
-		},*/
-		21: { // Lockdown Blow / Changed
-			0: {
+		},
+		21: { // Lockdown Blow
+			0: { // Same animation as 1st cast of shield barrage, just slower
 				length: 1400,
 				distance: 100.13, // M.Human, 100.126
 				noInterrupt: [2],
-				chains: {
-					10: 30,
-					18: 30
-				},
 				race: {
 					0: { distance: 100.13 }, // M.Human: 100.125
 					2: { // M.Helf: 1175, 102.701
@@ -792,8 +783,7 @@ module.exports = {
 					8: { distance: 92.39 }, // Popori: 92.39
 					9: { distance: 122.66 } // Elin: 122.66
 				}
-			},
-			30: false
+			}
 		},
 		22: { // Iron Will
 			0: {
@@ -809,20 +799,19 @@ module.exports = {
 				noInterrupt: [2]
 			}
 		},
-		24: { // Chained Leash / Changed
-			'*': {
+		24: { // Chained Leash
+			0: {
 				length: [725, 850],
-				noInterrupt: [2],
-				/*chains: {
-					//4: 1,
-					4: 2
-				}*/
-			}, // Looks a tad like a ninja skill chain
-			0: true,
-			1: false,
-			2: false
+				noInterrupt: [2]
+			}
 		},
-		25: { // Wallop / Changed
+		25: { // Wallop
+			'*': {
+				abnormals: {
+					7692002: { chain: 6 },
+					9692002: { chain: 6 }
+				}
+			},
 			0: {
 				length: 2375,
 				distance: 100,
@@ -832,8 +821,7 @@ module.exports = {
 					10: 30,
 					13: 30,
 					15: 30,
-					18: 30,
-					24: 30
+					18: 30
 				}
 			},
 			30: {
@@ -878,27 +866,6 @@ module.exports = {
 					9: { length: 650 }, // Elin
 				}
 			}
-		},
-		28: { // Righteous Leap
-			0: {
-				length: [375, 1025, 3100],
-				distance: [29.48, 445.52, 0],
-				chains: {
-					15: 1,
-					24: 1
-				}
-			},
-			1: false
-		},
-		29: { // Deploy Barrier
-			0: false
-			// length: 10700
-		},
-		30: { // Heavenly Shield 
-			0: false
-		},
-		91: { // Awaken Aura
-			0: false
 		}
 	},
 	2: { // Slayer
@@ -1298,7 +1265,7 @@ module.exports = {
 				}
 			},
 			30: {
-				length: 1525,
+				length: 1525, //
 				distance: 100
 			}
 		},
@@ -1538,13 +1505,13 @@ module.exports = {
 			1: true,
 			30: true,
 		},
-		/*7: { // Mocking Shout / Legacy skill
+		7: { // Mocking Shout
 			0: {
 				fixedSpeed: 1,
 				length: [315, 1100],
 				noInterrupt: [2]
 			}
-		},*/
+		},
 		8: { // Fiery Rage
 			'*': { noInterrupt: [2] },
 			0: {
@@ -1629,7 +1596,7 @@ module.exports = {
 				}
 			}
 		},
-		/*12: { // Unchained Anger / Legacy skill
+		12: { // Unchained Anger
 			'*': {
 				length: [1035, 550],
 				noInterrupt: [2]
@@ -1658,17 +1625,17 @@ module.exports = {
 					4010150: { chargeSpeed: 0.2 }
 				},
 				chains: {
-					'3-13': 14, // this is fine though maybe uneeded, 13: 14 does the same
-					'10-13': 14,
-					'18-13': 14
-				},
+                    '3-13': 14, // this is fine though maybe uneeded, 13: 14 does the same
+                    '10-13': 14,
+                    '18-13': 14
+                },
 				level: [
 					{ length: 800 },	// 1600
 					{ length: [800, 800] },	// 1600
 					{ length: [800, 800] }	// 1600
 				]
-			},
-			10: {
+            },
+            10: {
 				distance: 87.28, // 87.272
 				noInterrupt: [2, 4, 24, 25, 30],
 				race: {
@@ -1679,7 +1646,7 @@ module.exports = {
 					10: { distance: 64.88 } // Baraka: 64.884
 				}
 			},
-			11: {
+            11: {
 				distance: 87.28, // 87.272
 				noInterrupt: [2, 4, 24, 25, 30],
 				race: {
@@ -1690,7 +1657,7 @@ module.exports = {
 					10: { distance: 64.88 } // Baraka: 64.884
 				}
 			},
-			12: {
+            12: {
 				distance: 87.28, // 87.272
 				noInterrupt: [2, 4, 24, 25, 30],
 				race: {
@@ -1701,7 +1668,7 @@ module.exports = {
 					10: { distance: 64.88 } // Baraka: 64.884
 				}
 			},
-			13: {
+            13: {
 				distance: 87.28, // 87.272
 				noInterrupt: [2, 4, 24, 25, 30],
 				race: {
@@ -1712,7 +1679,7 @@ module.exports = {
 					10: { distance: 64.88 } // Baraka: 64.884
 				}
 			},
-			14: {
+            14: { 
 				distance: 87.28, // 87.272
 				race: {
 					3: { distance: 72.79 }, // F.Helf: 72.785
@@ -1793,7 +1760,7 @@ module.exports = {
 				}
 			}
 		},
-		19: { // Fortitude
+		19: { // Tenacity
 			0: {
 				fixedSpeed: 1,
 				length: [500, 710],
@@ -1879,12 +1846,10 @@ module.exports = {
 			}
 		},
 		27: { // Unbreakable /Need M.Casta
-			'*': {
+			0: {
 				length: 2100,
 				noInterrupt: [2]
 			},
-			0: true,
-			30: false, // Used for Berserk mode? Chain?
 		},
 		28: { // Intimidation /Need M.Casta
 			0: {
@@ -1974,62 +1939,6 @@ module.exports = {
 					10: { distance: 126.49 } // Baraka: 126.49
 				}
 			}
-		},
-		33: { // Rage / WUT IS THIS, maybe Berserk
-			0: false // length: 
-		},
-		34: { // Right Hand / remember to test require buff
-			0: false, /*{
-				length:
-				distance:
-				chains: {
-					35: 30
-				}
-			}*/
-			30: false,
-			31: false
-		},
-		35: { // Left Hand
-			0: false, /*{
-				length:
-				distance:
-				chains: {
-					34: 30
-				}
-			}*/
-			30: false,
-			31: false // Intimidation usage?, specific chaining? Self chains?
-		},
-		36: { // Dual Wield
-			0: false, /*{
-				length:
-				distance:
-				chains: {
-					34: 30,
-					35: 30,
-				}
-			}*/
-			30: false,
-			31: false
-		},
-		37: { // Crimson Assault
-			0: false, /*{
-				length:
-				distance:
-				chains: { // It may just used 0 with most stuff and just chain from something particular though
-					34: 30,
-					35: 30,
-					36: 30,
-					37: 30
-				}
-			}*/
-			30: false
-		},
-		38: { // Rage II 
-			0: false, // { length: }
-		},
-		91: { // Awaken Aura
-			0: false, // { length: }
 		}
 	},
 	4: { // Sorcerer
