@@ -3144,7 +3144,7 @@ module.exports = {
 				noInterrupt: [42]
 			}
 		},
-		43: { // Release																																																																							
+		43: { // Release
 			0: { length: [400, 575] }
 		}
 	},
