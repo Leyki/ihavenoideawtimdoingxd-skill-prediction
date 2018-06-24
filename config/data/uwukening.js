@@ -6661,7 +6661,7 @@ module.exports = {
 						stamina: -5
 					}
 				},
-				blockCancelPacket: true,
+				blockCancelPacket:true,
 				chains: {
 					5: 1,
 					7: 0,
@@ -6999,17 +6999,17 @@ module.exports = {
 			1: true,
 			2: true
 		},
-		41: { //UNKNOWN
+		41: { //Beam Panel: Summon
 			1: false,
 			2: false,
 			3: false
 		},
-		42: { //UNKNOWN
+		42: { //Beam Panel: Blast
 			1: {
 				length: 632 
 			}
 		},
-		43: { //UNKNOWN
+		43: { //Arcane Ray
 			'*': {
 				length: 876 // no clue lol
 			},
@@ -7044,7 +7044,7 @@ module.exports = {
 				length: 1669
 			}
 		},
-		44: { //UNKNOWN
+		44: { //Beam Panel: Balder's Vengeance
 			'*': {
 				length: 5813,
 				distance: 269 //(possible should be recoil)
@@ -7052,7 +7052,7 @@ module.exports = {
 			1: true,
 			2: true
 		},
-		47: { //UNKNOWN
+		47: { //Beam Panel: Carpet Bomb
 			'*': {
 				distance: 129.74 //(possible should be recoil)
 			},
