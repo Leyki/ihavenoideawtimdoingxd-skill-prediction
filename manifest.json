@@ -1,7 +1,7 @@
 {
   "files": {
     "LICENSE": "53927bd0b739d38c87a0a82236fd9b070c2dfff11c0c119be50372005d5047ad",
-    "module.json": "8e73f7575ee71a68f91647c386adf75df8d4c4a24ccc8f7627bfc76291f28a34",
+    "module.json": "8ffb9a4709e9abd5314d3f20c6b20c40f401476396646a2ff8e77eb176bf7b87",
     "package.json": "a82b47e16defd19529813e47c0d7023598126bd2e032a9aa133b8c042faddf2a",
     "README.pdf": "5969bd8c988891bb3914f3df5543de6f46308cf300432b8b850347b6fbd010a3",
     "config/data/abnormalities.js": "789180d56f8d84398085b09850b0acbe824f0fc111ca569cf6d18fa03ab6b27d",
@@ -29,7 +29,7 @@
     "docs/preset.pdf": "152a0e837e2a50d7278cc92d371c783d233f6122dea1b767a0ba81cc0112479f",
     "lib/abnormalities.js": "70e78b02da883622089e327425a8f7f69bbdfaa8a6bc67b7fba3ad292f6c23db",
     "lib/core.js": "3adfd067347fd130613b5bc5ac20548a009da2c63e73fb639fa509482dbffd73",
-    "lib/commands.js": "16d7fa459151c4b44c33aa7b4ec014defbcb14a5fce2b2ed345d007d18f77cc6",
+    "lib/commands.js": "62784a5973425800cf487141175a9b97766ced682ee4d0f12278520a1d47be93",
     "lib/autoconfig.js": "ec1262cf7de14ec51e17e7dac19550f7b5ac4f5f0b6d1b414a9838f572a12a70",
     "lib/ping.js": "9868a034284f4f8a095cc2e943acc35340f339e2e0b5a267579258acd4515923",
     "lib/utils.js": "116ce8683ab1715fc411b54e1a805578b7cf8d821e9cf767b87e49171d0f99d9",
