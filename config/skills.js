@@ -3461,6 +3461,7 @@ module.exports = {
 			0: true,
 			1: {
 				type: 'lockonCast',
+				forceClip: true,
 				setEndpointStage: 1
 			}
 		},
